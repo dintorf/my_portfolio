@@ -1,0 +1,1197 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"body",
+				"bodyParser"
+			],
+			[
+				"Tok",
+				"TokenManager"
+			],
+			[
+				"contact",
+				"contactSummaryUtils"
+			],
+			[
+				"hasM",
+				"hasMailChimpAccount"
+			],
+			[
+				"message-cont",
+				"message-content"
+			],
+			[
+				"subje",
+				"subject_header"
+			],
+			[
+				"autho",
+				"authorizationUrl"
+			],
+			[
+				"realid",
+				"RealID"
+			],
+			[
+				"closed",
+				"totalClosed"
+			],
+			[
+				"unass",
+				"unassignedLeads"
+			],
+			[
+				"close",
+				"closedLeads"
+			],
+			[
+				"deliver",
+				"deliveredCount"
+			],
+			[
+				"delev",
+				"deliveredCount"
+			],
+			[
+				"end",
+				"endDate"
+			],
+			[
+				"start",
+				"startDate"
+			],
+			[
+				"endDate",
+				"endDateStr"
+			],
+			[
+				"date",
+				"datepicker"
+			],
+			[
+				"market",
+				"marketingContactReport"
+			],
+			[
+				"create",
+				"createCallListPie"
+			],
+			[
+				"h",
+				"h"
+			],
+			[
+				"ToShot",
+				"ToShortDateString"
+			],
+			[
+				"vb",
+				"vbCrlf"
+			],
+			[
+				"cbri",
+				"CBirthRow"
+			],
+			[
+				"showC",
+				"showCCell"
+			],
+			[
+				"CEm",
+				"CEmailRow"
+			],
+			[
+				"CTit",
+				"CTitle"
+			],
+			[
+				"CTitl",
+				"CTitleRow"
+			],
+			[
+				"CComp",
+				"CCompany"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "public/views/navbar.html",
+			"settings":
+			{
+				"buffer_size": 1044,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/index.html",
+			"settings":
+			{
+				"buffer_size": 1008,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/src/js/main.js",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 387.0,
+		"last_filter": "package control",
+		"selected_items":
+		[
+			[
+				"package control",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"packagecontrol",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/dintorf/Developer/MyPortfolio",
+		"/Users/dintorf/Developer/MyPortfolio/public",
+		"/Users/dintorf/Developer/MyPortfolio/public/src",
+		"/Users/dintorf/Developer/MyPortfolio/public/views"
+	],
+	"file_history":
+	[
+		"/Users/dintorf/Developer/MyPortfolio/public/lib/bootstrap/js/popover.js",
+		"/Users/dintorf/Developer/TutsWebAppAngular/contacts/public/main.html",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/css/bootswatch.min.css",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/css/bootstrap.min.css",
+		"/Users/dintorf/wisecode/SECURE/user/facebook.asp",
+		"/Users/dintorf/wisecode/App_Code/WiseAgent/Util/InMemoryTokenManager.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Source/LinkedIn/OAuthAuthorization.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Source/LinkedIn/WebOAuthAuthorization.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Samples/AuthenticationWeb/App_Code/InMemoryTokenManager.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Samples/AuthenticationWeb/App_Code/LinkedInBasePage.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Source/LinkedIn/ServiceEntities/ServiceProvider.cs",
+		"/Users/dintorf/wisecode/LinkedIn Developer Toolkit/Samples/AuthenticationWeb/Default.aspx.cs",
+		"/Users/dintorf/wisecode/SECURE/includes/syncFunctions.asp",
+		"/Users/dintorf/wisecode/SECURE/client/SUMMARY.ASP",
+		"/Users/dintorf/wisecode/SECURE/client/client/Default.aspx.cs",
+		"/Users/dintorf/wisecode/SECURE/javascript/contactSummaryUtils.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/util/facebook.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/facebook.js",
+		"/Users/dintorf/wisecode/App_Code/WiseAgent/Util/Google_Gmail.cs",
+		"/Users/dintorf/wisecode/SECURE/includes/RandomString.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/reportsUtil.js",
+		"/Users/dintorf/wisecode/SECURE/includes/util/reportsdata.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/client/reportLoad.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/sqlize.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/client/google_gmail.asp",
+		"/Users/dintorf/wisecode/SECURE/client/CLIENTLIST.ASP",
+		"/Users/dintorf/wisecode/SECURE/login_secure.ASP",
+		"/Users/dintorf/wisecode/SECURE/includes/user/LoginForm.asp",
+		"/Users/dintorf/wisecode/SECURE/css/contactsummary.css",
+		"/Users/dintorf/wisecode/SECURE/client/CreateReturnLabels.asp",
+		"/Users/dintorf/wisecode/SECURE/client/CLIENTWELCOME.ASP",
+		"/Users/dintorf/wisecode/SECURE/includes/client/callListLoad.asp",
+		"/Users/dintorf/wisecode/SECURE/client/callListmaster.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/callListUtils.js",
+		"/Users/dintorf/wisecode/SECURE/client/leadDashboard.asp",
+		"/Users/dintorf/wisecode/SECURE/register.ASP",
+		"/Users/dintorf/wisecode/SECURE/includes/util/LangUtils.asp",
+		"/Users/dintorf/wisecode/mobile/registerMobile.ASP",
+		"/Users/dintorf/wisecode/includes/contactTreble.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/headinc.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/dashboard.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/user/menustyle_bootstrap.asp",
+		"/Users/dintorf/wisecode/myplace.thewiseagent.com/includes/facebook.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/tabs/facebook.asp",
+		"/Users/dintorf/Developer/TransPac/TransPacCloudCode/cloud/main.js",
+		"/Users/dintorf/wisecode/SECURE/javascript/chat.js",
+		"/Users/dintorf/wisecode/chatHttp.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/chat/chatModel.asp",
+		"/Users/dintorf/wisecode/chatIssues.asp",
+		"/Users/dintorf/Desktop/skypetogif.py",
+		"/Users/dintorf/Desktop/skypetogif.pl",
+		"/Users/dintorf/Desktop/slack_post.sh",
+		"/Users/dintorf/Desktop/slack_post.pl",
+		"/Users/dintorf/wisecode/SECURE/includes/permissionError.asp",
+		"/Users/dintorf/wisecode/SECURE/email/default.asp",
+		"/Users/dintorf/wisecode/SECURE/Mail/readmail.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/localDataPath.asp",
+		"/Users/dintorf/wisecode/SECURE/http/webconnect.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/user/apikey.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/ckeditor_4.01/ckeditor.js",
+		"/Users/dintorf/wisecode/SECURE/includes/user/LeadFilter.asp",
+		"/Users/dintorf/wisecode/SECURE/user/integrations.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/leadcapture.js",
+		"/Users/dintorf/wisecode/SECURE/client/EDITCLIENT.ASP",
+		"/Users/dintorf/wisecode/SECURE/includes/tabs/email.asp",
+		"/Users/dintorf/wisecode/SECURE/email/plainmail.asp",
+		"/Users/dintorf/wisecode/mobile/contactMobile.asp",
+		"/Users/dintorf/wisecode/default.asp",
+		"/Users/dintorf/wisecode/mobile/default.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/mobileUtils.js",
+		"/Users/dintorf/wisecode/mail/contactMail.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/email/UploadDashboard.asp",
+		"/Users/dintorf/wisecode/SECURE/USERMENU.ASP",
+		"/Users/dintorf/wisecode/SECURE/client/googlecontacts.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/util/google_auth.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/fullCalendarUtils.js",
+		"/Users/dintorf/wisecode/SECURE/includes/util/ContactStatus.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/tabs/google_contacts.asp",
+		"/Users/dintorf/wisecode/App_Code/WiseAgent/Contacts/Client.cs",
+		"/Users/dintorf/wisecode/SECURE/includes/client/Client.asp",
+		"/Users/dintorf/wisecode/App_Code/WiseAgent/Util/GoogleCalendar.cs",
+		"/Users/dintorf/wisecode/SECURE/client/googlecalendar.asp",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/zlib.x86.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.YouTube.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.WebmasterTools.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Spreadsheets.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Photos.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Calendar.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Blogger.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Apps.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Analytics.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.AccessControl.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Client.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.CodeSearch.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Contacts.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.ContentForShopping.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Extensions.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Documents.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Health.dll",
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.GoogleBase.dll",
+		"/Users/dintorf/wisecode/SECURE/TOOLS/helpcat.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/GroupSelects.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/client/Category.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/client/ClientsByCategory.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/newLook.asp",
+		"/Users/dintorf/wisecode/SECURE/TOOLS/helpadmin.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/jquery.mixitup.js",
+		"/Users/dintorf/wisecode/SECURE/includes/colorconverter.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/util/infobox.asp",
+		"/Users/dintorf/wisecode/SECURE/assets/css/ace.css",
+		"/Users/dintorf/wisecode/SECURE/assets/css/ui.jqgrid.css",
+		"/Volumes/10.1.11.155/WebsiteFiles/test_sites/test.thewiseagent.com/SECURE/assets/css/ui.jqgrid.css",
+		"/Users/dintorf/wisecode/SECURE/includes/user/InsideTeamMember.asp",
+		"/Volumes/10.1.11.155/WebsiteFiles/test_sites/test.thewiseagent.com/SECURE/assets/css/ace.css",
+		"/Users/dintorf/Desktop/test.csv",
+		"/Volumes/10.1.11.155/WebsiteFiles/test_sites/test.thewiseagent.com/SECURE/includes/util/infobox.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/util/reportsdata2.asp",
+		"/Users/dintorf/wisecode/SECURE/client/attachfile2.asp",
+		"/Users/dintorf/wisecode/SECURE/assets/js/date-time/bootstrap-datepicker.min.js",
+		"/Users/dintorf/wisecode/SECURE/javascript/jqgrid/jquery.jqGrid.min.js",
+		"/Users/dintorf/wisecode/SECURE/client/editcall.asp",
+		"/Users/dintorf/wisecode/SECURE/javascript/jqm-cal.js",
+		"/Users/dintorf/wisecode/SECURE/assets/css/less/thirdparty-jqgrid.less",
+		"/Users/dintorf/wisecode/SECURE/assets/css/less/ace.less",
+		"/Users/dintorf/wisecode/SECURE/includes/client/insideteam_leads.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/client/summaryLoad.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/vendor/getVendor.asp",
+		"/Users/dintorf/wisecode/SECURE/includes/getVendor.asp"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/dintorf/Developer/wisecode",
+			"/Users/dintorf/wisecode"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"popover",
+			"<<<<<<< HEAD",
+			">>>>>>> origin/master",
+			"<<<<<<< HEAD",
+			">>>>>>>",
+			"=======",
+			"<< HEAD",
+			"<<HEAD",
+			"HEAD",
+			"toggleBox",
+			"googleId",
+			"togglebox",
+			"InMemoryTokenManager.cs",
+			"AuthLinkedIn",
+			"secret",
+			"authlinkedin",
+			"Consumer",
+			"AuthLinkedIn",
+			"syncconn",
+			"syncDB",
+			"waclient.RealID",
+			"conversations",
+			"status,",
+			"nextcontactdate = ",
+			"nextcontactdat = ",
+			"nextcontactdat",
+			"action",
+			"gmail",
+			"space-",
+			"function ",
+			"function",
+			"tabs",
+			"inbox",
+			"accesstoken",
+			"ismobile",
+			"chkforxss",
+			"check",
+			"alert(",
+			"ha",
+			"alert(",
+			"getcalllist(",
+			"allcalls",
+			"alert(",
+			"ha",
+			"ha2",
+			"allcalls",
+			"AllCalls",
+			"alert(",
+			"ha 2",
+			"ha2",
+			"ha\"",
+			"ha'",
+			"ha",
+			"scope = ",
+			"loginlink",
+			"user_online_presence",
+			"user_online_presence, friends_online_presence, friends_status.",
+			"ticketno",
+			"doissue",
+			"addChat()",
+			"addChat",
+			"getindex()",
+			"addChat",
+			"'",
+			"getindex",
+			"read",
+			"getIssue",
+			"addissue",
+			"getchatmess",
+			"getChatmessage(",
+			"getChat",
+			"getIssues",
+			"getissues()",
+			"getissues",
+			"addissue",
+			"globalclientconn",
+			"datepicker",
+			"toolti",
+			"tooltip",
+			"jquery-ui",
+			"localDataPath",
+			"RC4_endecrypt",
+			"apikey",
+			"decrypt",
+			"requestType",
+			"cAlert(",
+			"cAlert",
+			"checkme",
+			"Email Client",
+			"vendororclient",
+			"email clients",
+			"initleadcapture",
+			"loadfilters",
+			"ckeditor",
+			"filters",
+			"isNaN",
+			"loadfilters",
+			"savefilter",
+			"]",
+			"Spouse",
+			"Client",
+			"message-item .text",
+			"railVis",
+			"height",
+			"message-list",
+			"message-item",
+			"Inbox ",
+			"active",
+			"callTab",
+			"clientemail",
+			"recipient",
+			"cemail",
+			"recipient",
+			"message-item",
+			"message-list",
+			"message-item",
+			"gmail",
+			"GetGmail",
+			"GetGmailThreads",
+			"gmailTab",
+			"gmail",
+			"messagebar",
+			"Sort",
+			"message-form",
+			"GetGmail",
+			"GetGmail()",
+			"GetGmail",
+			"Today"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"\"\"",
+			"",
+			"\" & realid & \"",
+			"%5C"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "public/views/navbar.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1044,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								768,
+								768
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1008,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								319,
+								319
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/src/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "portfolio.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"webcontactall",
+				"SECURE/webcontactAllFields.asp"
+			],
+			[
+				"includes/util/facebook",
+				"wisecode/SECURE/includes/util/facebook.asp"
+			],
+			[
+				"facebook.asp",
+				"wisecode/SECURE/user/facebook.asp"
+			],
+			[
+				"secure/google/default.",
+				"wisecode/SECURE/google/Default.aspx.cs"
+			],
+			[
+				"togglebox.js",
+				"wisecode/SECURE/javascript/toggleBox.js"
+			],
+			[
+				"weboauthauthoriz",
+				"wisecode/LinkedIn Developer Toolkit/Source/LinkedIn/WebOAuthAuthorization.cs"
+			],
+			[
+				"linkedin.cs",
+				"wisecode/App_Code/WiseAgent/Util/LinkedInWa.cs"
+			],
+			[
+				"user/user/default.aspx",
+				"wisecode/SECURE/user/user/Default.aspx.cs"
+			],
+			[
+				"linkedin.asp",
+				"wisecode/SECURE/user/linkedin.asp"
+			],
+			[
+				"facebook.js",
+				"wisecode/SECURE/javascript/facebook.js"
+			],
+			[
+				"gmail",
+				"wisecode/App_Code/WiseAgent/Util/Google_Gmail.cs"
+			],
+			[
+				"summary.",
+				"wisecode/SECURE/client/SUMMARY.ASP"
+			],
+			[
+				"client/default.aspx",
+				"wisecode/SECURE/client/client/Default.aspx.cs"
+			],
+			[
+				"contactsumma",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"summary",
+				"wisecode/SECURE/client/SUMMARY.ASP"
+			],
+			[
+				"randomstring",
+				"wisecode/SECURE/includes/RandomString.asp"
+			],
+			[
+				"reportsdata",
+				"wisecode/SECURE/includes/util/reportsdata.asp"
+			],
+			[
+				"reportlad",
+				"wisecode/SECURE/includes/client/reportLoad.asp"
+			],
+			[
+				"reportsutil",
+				"wisecode/SECURE/javascript/reportsUtil.js"
+			],
+			[
+				"includes/util/face",
+				"wisecode/SECURE/includes/util/facebook.asp"
+			],
+			[
+				"clientlist.asp",
+				"wisecode/SECURE/client/CLIENTLIST.ASP"
+			],
+			[
+				"contactsummar",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"summary.asp",
+				"wisecode/SECURE/client/SUMMARY.ASP"
+			],
+			[
+				"sqlize.asp",
+				"wisecode/SECURE/includes/sqlize.asp"
+			],
+			[
+				"loginform.asp",
+				"wisecode/SECURE/includes/user/LoginForm.asp"
+			],
+			[
+				"login_secur",
+				"wisecode/SECURE/login_secure.ASP"
+			],
+			[
+				"langutils.asp",
+				"wisecode/SECURE/includes/util/LangUtils.asp"
+			],
+			[
+				"register.asp",
+				"wisecode/SECURE/register.ASP"
+			],
+			[
+				"registermobile.as",
+				"wisecode/mobile/registerMobile.ASP"
+			],
+			[
+				"contacttreble",
+				"wisecode/includes/contactTreble.asp"
+			],
+			[
+				"leaddashboad.asp",
+				"wisecode/SECURE/client/leadDashboard.asp"
+			],
+			[
+				"headinc.asp",
+				"wisecode/SECURE/includes/headinc.asp"
+			],
+			[
+				"dashboard.asp",
+				"wisecode/SECURE/includes/dashboard.asp"
+			],
+			[
+				"menustyle",
+				"wisecode/SECURE/includes/user/menustyle_bootstrap.asp"
+			],
+			[
+				"calllistload.asp",
+				"wisecode/SECURE/includes/client/callListLoad.asp"
+			],
+			[
+				"calllistmaster",
+				"wisecode/SECURE/client/callListmaster.asp"
+			],
+			[
+				"",
+				"Ruby/temp"
+			],
+			[
+				"calllistutils.",
+				"wisecode/SECURE/javascript/callListUtils.js"
+			],
+			[
+				"includes/util/facebook.asp",
+				"wisecode/SECURE/includes/util/facebook.asp"
+			],
+			[
+				"includesfacebook.asp",
+				"wisecode/myplace.thewiseagent.com/includes/facebook.asp"
+			],
+			[
+				"chatmodel",
+				"wisecode/SECURE/includes/chat/chatModel.asp"
+			],
+			[
+				"chathttp",
+				"wisecode/chatHttp.asp"
+			],
+			[
+				"chat",
+				"wisecode/SECURE/javascript/chat.js"
+			],
+			[
+				"createreturnlabels",
+				"wisecode/SECURE/client/CreateReturnLabels.asp"
+			],
+			[
+				"clientwelcome.asp",
+				"wisecode/SECURE/client/CLIENTWELCOME.ASP"
+			],
+			[
+				"report",
+				"wisecode/SECURE/javascript/reportsUtil.js"
+			],
+			[
+				"permissione",
+				"wisecode/SECURE/includes/permissionError.asp"
+			],
+			[
+				"email/default.asp",
+				"wisecode/SECURE/email/default.asp"
+			],
+			[
+				"localdatapath",
+				"wisecode/SECURE/includes/localDataPath.asp"
+			],
+			[
+				"includes/localdatapath",
+				"wisecode/SECURE/includes/localDataPath.asp"
+			],
+			[
+				"readmail.asp",
+				"wisecode/SECURE/Mail/readmail.asp"
+			],
+			[
+				"contactsummary.cs",
+				"wisecode/SECURE/css/contactsummary.css"
+			],
+			[
+				"calllistutils",
+				"wisecode/SECURE/javascript/callListUtils.js"
+			],
+			[
+				"apikey.asp",
+				"wisecode/SECURE/includes/user/apikey.asp"
+			],
+			[
+				"webconnect",
+				"wisecode/SECURE/http/webconnect.asp"
+			],
+			[
+				"webconnect.asp",
+				"wisecode/SECURE/http/webconnect.asp"
+			],
+			[
+				"mobileutil",
+				"wisecode/SECURE/javascript/mobileUtils.js"
+			],
+			[
+				"mobile/defaul",
+				"wisecode/mobile/default.asp"
+			],
+			[
+				"default.a",
+				"wisecode/default.asp"
+			],
+			[
+				"contactmobil",
+				"wisecode/mobile/contactMobile.asp"
+			],
+			[
+				"default.asp",
+				"wisecode/default.asp"
+			],
+			[
+				"contacttre",
+				"wisecode/includes/contactTreble.asp"
+			],
+			[
+				"contactmail.asp",
+				"wisecode/mail/contactMail.asp"
+			],
+			[
+				"mobileutil.",
+				"wisecode/SECURE/javascript/mobileUtils.js"
+			],
+			[
+				"mobile/contact",
+				"wisecode/mobile/contactMobile.asp"
+			],
+			[
+				"tabs/email.asp",
+				"wisecode/SECURE/includes/tabs/email.asp"
+			],
+			[
+				"uploaddashboard",
+				"wisecode/SECURE/includes/email/UploadDashboard.asp"
+			],
+			[
+				"usermenu.asp",
+				"wisecode/SECURE/USERMENU.ASP"
+			],
+			[
+				"plainmail.asp",
+				"wisecode/SECURE/email/plainmail.asp"
+			],
+			[
+				"leadfilter.asp",
+				"wisecode/SECURE/includes/user/LeadFilter.asp"
+			],
+			[
+				"secure/user/integrations.asp",
+				"wisecode/SECURE/user/integrations.asp"
+			],
+			[
+				"ckeditor.js",
+				"wisecode/SECURE/javascript/ckeditor_4.01/ckeditor.js"
+			],
+			[
+				"leadcapture.js",
+				"wisecode/SECURE/javascript/leadcapture.js"
+			],
+			[
+				"editclient.asp",
+				"wisecode/SECURE/client/EDITCLIENT.ASP"
+			],
+			[
+				"contactsummary.css",
+				"wisecode/SECURE/css/contactsummary.css"
+			],
+			[
+				"summaryutil",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"googlecontact",
+				"wisecode/SECURE/client/googlecontacts.asp"
+			],
+			[
+				"client/client/defa",
+				"wisecode/SECURE/client/client/Default.aspx.cs"
+			],
+			[
+				"secure/includes/google",
+				"wisecode/SECURE/includes/util/google_auth.asp"
+			],
+			[
+				"googlecontacts",
+				"wisecode/SECURE/client/googlecontacts.asp"
+			],
+			[
+				"secure/client/clientlist.asp",
+				"wisecode/SECURE/client/CLIENTLIST.ASP"
+			],
+			[
+				"tabs/google",
+				"wisecode/SECURE/includes/tabs/google_contacts.asp"
+			],
+			[
+				"clientwelcom.asp",
+				"wisecode/SECURE/client/CLIENTWELCOME.ASP"
+			],
+			[
+				"contactstatus.asp",
+				"wisecode/SECURE/includes/util/ContactStatus.asp"
+			],
+			[
+				"client.cs",
+				"wisecode/App_Code/WiseAgent/Contacts/Client.cs"
+			],
+			[
+				"client.asp",
+				"wisecode/SECURE/includes/client/Client.asp"
+			],
+			[
+				"reportsdata.asp",
+				"wisecode/SECURE/includes/util/reportsdata.asp"
+			],
+			[
+				"google_auth.asp",
+				"wisecode/SECURE/includes/util/google_auth.asp"
+			],
+			[
+				"googlecalendar",
+				"wisecode/App_Code/WiseAgent/Util/GoogleCalendar.cs"
+			],
+			[
+				"googlecalendar.asp",
+				"wisecode/SECURE/client/googlecalendar.asp"
+			],
+			[
+				"fullcalendarust",
+				"wisecode/SECURE/javascript/fullCalendarUtils.js"
+			],
+			[
+				"googlecontacts.asp",
+				"wisecode/SECURE/client/googlecontacts.asp"
+			],
+			[
+				"groupselects",
+				"wisecode/SECURE/includes/GroupSelects.asp"
+			],
+			[
+				"category.asp",
+				"wisecode/SECURE/includes/client/Category.asp"
+			],
+			[
+				"newlook.asp",
+				"wisecode/SECURE/javascript/newLook.asp"
+			],
+			[
+				"headinc.sp",
+				"wisecode/SECURE/includes/headinc.asp"
+			],
+			[
+				"helpadmin.asp",
+				"wisecode/SECURE/TOOLS/helpadmin.asp"
+			],
+			[
+				"helpcat.asp",
+				"wisecode/SECURE/TOOLS/helpcat.asp"
+			],
+			[
+				"infobox.asp",
+				"wisecode/SECURE/includes/util/infobox.asp"
+			],
+			[
+				"ui.jqgrid.css",
+				"wisecode/SECURE/assets/css/ui.jqgrid.css"
+			],
+			[
+				"secure/assets/css/ace",
+				"wisecode/SECURE/assets/css/ace.css"
+			],
+			[
+				"secure/includes/color",
+				"wisecode/SECURE/includes/colorconverter.asp"
+			],
+			[
+				"insideteammember.asp",
+				"wisecode/SECURE/includes/user/InsideTeamMember.asp"
+			],
+			[
+				"contactsummaryu",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"contactstatus",
+				"wisecode/SECURE/includes/util/ContactStatus.asp"
+			],
+			[
+				"calllistutil",
+				"wisecode/SECURE/javascript/callListUtils.js"
+			],
+			[
+				"attachfile2.asp",
+				"wisecode/SECURE/client/attachfile2.asp"
+			],
+			[
+				"jqgrid.js",
+				"wisecode/SECURE/javascript/jqgrid/jquery.jqGrid.min.js"
+			],
+			[
+				"bootstrapdate",
+				"wisecode/SECURE/assets/js/date-time/bootstrap-datepicker.min.js"
+			],
+			[
+				"insideteam.asp",
+				"wisecode/SECURE/includes/user/InsideTeamMember.asp"
+			],
+			[
+				"editcall.asp",
+				"wisecode/SECURE/client/editcall.asp"
+			],
+			[
+				"jqcal.js",
+				"wisecode/SECURE/javascript/jqm-cal.js"
+			],
+			[
+				"jqgrid.less",
+				"wisecode/SECURE/assets/css/less/thirdparty-jqgrid.less"
+			],
+			[
+				"ace.less",
+				"wisecode/SECURE/assets/css/less/ace.less"
+			],
+			[
+				"ace.css",
+				"wisecode/SECURE/assets/css/ace.css"
+			],
+			[
+				"calllistmaster.asp",
+				"wisecode/SECURE/client/callListmaster.asp"
+			],
+			[
+				"calllistutils.js",
+				"wisecode/SECURE/javascript/callListUtils.js"
+			],
+			[
+				"insideteamleads",
+				"wisecode/SECURE/includes/client/insideteam_leads.asp"
+			],
+			[
+				"contactsuma",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"summaryload.asp",
+				"wisecode/SECURE/includes/client/summaryLoad.asp"
+			],
+			[
+				"reportload.asp",
+				"wisecode/SECURE/includes/client/reportLoad.asp"
+			],
+			[
+				"reportsutil.js",
+				"wisecode/SECURE/javascript/reportsUtil.js"
+			],
+			[
+				"menustyle_bootstrap.asp",
+				"wisecode/SECURE/includes/user/menustyle_bootstrap.asp"
+			],
+			[
+				"profile.asp",
+				"wisecode/SECURE/user/profile.asp"
+			],
+			[
+				"contactsummaryut",
+				"wisecode/SECURE/javascript/contactSummaryUtils.asp"
+			],
+			[
+				"client/default.asp",
+				"wisecode/SECURE/client/client/Default.aspx.cs"
+			],
+			[
+				"client/default.aspx.cs",
+				"wisecode/SECURE/client/client/Default.aspx.cs"
+			],
+			[
+				"client/client.asp",
+				"wisecode/SECURE/includes/client/Client.asp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
