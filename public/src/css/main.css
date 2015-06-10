@@ -31,6 +31,14 @@
 	background: #4e5d6c;
 }
 
+.section.style2 {
+	background: #ffffff;
+}
+
+.section.style3 {
+	background: #f4f4f4;
+}
+
 .img-profile {
 	position: absolute;
 	z-index: 999;

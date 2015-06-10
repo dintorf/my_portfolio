@@ -23,6 +23,11 @@ app.controller('MainController', function ($scope, $location) {
 			icon: 'github-alt'
 		}
 	];
+
+	GitHubActivity.feed({
+	    username: "dintorf",
+	    selector: "#feed"
+	});
 });
 
 app.controller('NavController', function ($scope, $location) {
