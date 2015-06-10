@@ -73,3 +73,24 @@ a.badge.linkedin:hover {
 a.badge.github:hover {
 	background-color: #333333;
 }
+
+@media (min-width: 768px) {
+  .sidebar.affix {
+    width: 158px;
+    top: 25px;
+  }
+}
+
+@media (min-width: 992px) {
+  .sidebar.affix {
+    width: 213px;
+    position: fixed;
+    top: 25px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar.affix {
+    width: 263px;
+  }
+}
