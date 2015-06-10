@@ -1,4 +1,4 @@
-<nav id="navbar" class="navbar navbar-default navbar-fixed-top">
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" ng-controller="NavController">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -16,11 +16,8 @@
           <input type="text" class="form-control" placeholder="Search">
         </div>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about">About</a></li>
-        <li><a href="#">Resume</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+      <ul class="nav navbar-nav navbar-right" ng-repeat='link in links | reverse'>
+        <li><a href="{{link.href}}">{{link.title}}</a></li>
       </ul>
     </div>
   </div>

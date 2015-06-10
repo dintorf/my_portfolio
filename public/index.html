@@ -1,5 +1,5 @@
 
-<html ng-app>
+<html ng-app="PortfolioApp">
   <head>
     <title>Dylan Intorf's Portfolio</title>
     <base href='/'>
@@ -10,14 +10,20 @@
   </head>
   <body>
     <div ng-include="'views/navbar.html'"></div>
-    <div ng-include="'views/banner.html'"></div>
+    <div ng-view></div>
+    <!-- <div ng-include="'views/banner.html'"></div>
     <div class="container-fluid">
       <div ng-include="'views/about.html'"></div>
-    </div>
+    </div> -->
 
     <script src='lib/jquery/dist/jquery.min.js'></script>
     <script src='lib/bootstrap/dist/js/bootstrap.min.js'></script>
     <script src='lib/angular/angular.min.js'></script>
+    <script src='lib/angular-route/angular-route.min.js'></script>
+    <script src='src/js/app.js'></script>
+    <script src='src/js/controllers.js'></script>
+    <script src='src/js/directives.js'></script>
+    <script src='src/js/filters.js'></script>
     <script src='src/js/main.js'></script>
   </body>
 </html>

@@ -1,8 +1,6 @@
 #banner {
-	padding: 20em 0;
+	padding: 20% 0;
 	text-align: center;
-	background: url(../../images/creek2.jpg) center center;
-	background-size: cover;
 }
 
 #banner .inner {
@@ -31,4 +29,19 @@
 
 .section.style1 {
 	background: #4e5d6c;
+}
+
+.img-profile {
+	position: absolute;
+	z-index: 999;
+    left: 44.5%;
+}
+
+div.img-profile img {
+	position: relative;
+	margin-top:-15%;
+}
+
+.img-size {
+	width: 20%;
 }
