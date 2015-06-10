@@ -6,7 +6,7 @@
 #banner .inner {
 	background: rgba(29,39,38,0.9);
 	display: inline-block;
-	padding: 3.5em 5em;
+	padding: 3.5em 10em;
 	position: relative;
 	z-index: 2;
 }
@@ -42,6 +42,26 @@ div.img-profile img {
 	margin-top:-15%;
 }
 
-.img-size {
-	width: 20%;
+#banner .inner .img-size {
+	width: 150px;
+}
+
+.social a.badge {
+	font-size: 20px;
+}
+
+a.badge.twitter:hover {
+	background-color: #55ACEE;
+}
+
+a.badge.google-plus:hover {
+	background-color: #DD4B39;
+}
+
+a.badge.linkedin:hover {
+	background-color: #0077B5;
+}
+
+a.badge.github:hover {
+	background-color: #333333;
 }

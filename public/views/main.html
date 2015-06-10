@@ -1,11 +1,12 @@
 <div id="banner" bg-image='bgImage'>
 	<div class="inner">
+		<img class="img-circle img-size" ng-src="{{myPic}}" />
 	    <h2>Dylan Intorf</h2>
 	    <p>Web & App Developer</p>
+	    <ul class="social list-inline">
+            <li ng-repeat="site in socialSites"><a href="{{site.href}}" class="badge {{site.class}}" target="_blank"><i class="fa fa-{{site.icon}}"></i></a></li>              
+        </ul>
 	</div>
-</div>
-<div class="img-profile">
-<img class="img-circle img-size" ng-src="{{myPic}}" />
 </div>
 <div class="container-fluid">
   <div id="about" class="row section style1">
