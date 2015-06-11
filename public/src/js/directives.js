@@ -28,7 +28,7 @@ app.directive('twitterTimeline', [function() {
 				element
 					.attr('id', 'twitter-feed')
 					.attr("width", "100%" || attrs.width)
-					.attr('data-chrome', 'noheader transparent')
+					.attr('data-chrome', 'transparent')
 					.attr('data-widget-id', attrs.twitterTimeline)
 					.addClass('twitter-timeline');
 

@@ -108,7 +108,11 @@ a.badge.github:hover {
 }
 
 #twitter-feed {
-	padding-top: 10px !important;
+	max-height: 630px;
+}
+
+.stream-new {
+	overflow-y: scroll;
 }
 
 .tweet {
@@ -123,6 +127,23 @@ a.badge.github:hover {
 .var-narrow .tweet .header {
 	padding-bottom: 10px !important;
 }
+/*.gha-header {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: calc(100% - 2px);
+    padding: 10px;
+    height: 67px;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    background: -moz-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #f4f4f4));
+    background: -webkit-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -o-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -ms-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: linear-gradient(to bottom, #fff 0, #f4f4f4 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f4f4f4', GradientType=0)
+}*/
 
 .var-narrow .tweet .e-entry-content {
 	margin-bottom: 10px !important;
@@ -131,13 +152,13 @@ a.badge.github:hover {
 .var-chromeless .tweet {
 	color: #727272;
 	background: #f9fafc;
-	border-bottom: 1px solid #E9E9EB;
-	border-radius: 10px;
-	margin-bottom: 10px;
+	border: 1px solid #ddd;
+	/*border-radius: 10px;*/
+	/*margin-bottom: 10px;*/
 }
 
 .var-chromeless .timeline-footer {
-	display: none;
+	/*display: none;*/
 }
 
 .var-chromeless button.load-more {
@@ -148,7 +169,7 @@ a.badge.github:hover {
 	border-radius: 0 !important;
 	border: none !important;
 	box-shadow: none !important;
-	display: none;
+	/*display: none;*/
 }
 
 div.no-tweets-pane {
@@ -179,4 +200,27 @@ div.no-tweets-pane {
 
 .p-author .profile .p-name {
 	color: #444 !important;
+}
+
+.timeline-header {
+    /*padding: 10px;*/
+    height: 43px;
+    border: 1px solid #ddd;
+    background: #fff;
+    background: -moz-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #f4f4f4));
+    background: -webkit-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -o-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: -ms-linear-gradient(top, #fff 0, #f4f4f4 100%);
+    background: linear-gradient(to bottom, #fff 0, #f4f4f4 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f4f4f4', GradientType=0)
+}
+
+.timeline-header .summary a:link{
+	display: inline-block;
+	float: left;
+	margin: 0 auto;
+	padding: 6px 10px 5px;
+	color: #495961!important;
+	font-size: 20px!important;
 }
