@@ -152,7 +152,9 @@ a.badge.github:hover {
 .var-chromeless .tweet {
 	color: #727272;
 	background: #f9fafc;
-	border: 1px solid #ddd;
+	border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: #ddd;
 	/*border-radius: 10px;*/
 	/*margin-bottom: 10px;*/
 }
