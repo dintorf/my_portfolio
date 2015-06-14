@@ -1,0 +1,10 @@
+<div id="banner" bg-image='bgImage'>
+	<div class="inner">
+		<img class="img-circle img-size" ng-src="{{myPic}}" />
+	    <h2>Dylan Intorf</h2>
+	    <p>Web & Mobile Developer</p>
+	    <ul class="social list-inline">
+            <li ng-repeat="site in socialSites"><a href="{{site.href}}" class="badge {{site.class}}" target="_blank"><i class="fa fa-{{site.icon}}"></i></a></li>              
+        </ul>
+	</div>
+</div>

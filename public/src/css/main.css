@@ -1,5 +1,5 @@
 #banner {
-	padding: 20% 0;
+	padding: 10% 0;
 	text-align: center;
 }
 
@@ -13,6 +13,18 @@
 
 .well p {
 	line-height: 2em;
+}
+
+.info ul, {
+	margin-top: 10;
+}
+
+.section.style2 .well {
+	background-color: #fff;
+}
+
+.info .fa.fa-envelope {
+	font-size: 14px;
 }
 
 .center {

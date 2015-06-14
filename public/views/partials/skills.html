@@ -1,0 +1,16 @@
+<div id="about" class="row section style2 text-muted">
+  <div class='container'>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+    	<div class="well">
+        	<h3>Skills</h3>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+    	<div class="well">
+	      	<h3>Education</h3>
+	      	<ul class="list-unstyled"
+	      		<li ng-repeat="info in details"> <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center"><i class="fa fa-{{info.icon}}"></i></span><span class="col-lg-10 col-md-10 col-sm-10 col-xs-10"><a ng-if="info.link" class="text-success" href='{{info.href}}'>{{info.content}}</a><span ng-if="!info.link">{{info.content}}</span></span></li>
+	      	</ul>
+	    </div>
+  </div>
+</div>

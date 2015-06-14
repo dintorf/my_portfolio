@@ -1,6 +1,6 @@
 app.controller('MainController', function ($scope, $location) {
-	$scope.myPic = '../images/me.jpg';
-	$scope.bgImage = '../images/creek2.jpg';
+	$scope.myPic = '../images/dist/me.jpg';
+	$scope.bgImage = '../images/dist/creek2.jpg';
 	$scope.socialSites = [
 		{
 			href: 'https://twitter.com/dintorf',
@@ -21,6 +21,27 @@ app.controller('MainController', function ($scope, $location) {
 			href: 'https://github.com/dintorf',
 			class: 'github',
 			icon: 'github-alt'
+		}
+	];
+
+	$scope.details = [
+		{
+			icon: 'map-marker',
+			link: false,
+			href: '',
+			content: 'Phoenix, AZ'
+		},
+		{
+			icon: 'envelope',
+			link: true,
+			href: 'mailto:dylan@dintorf.com',
+			content: 'dylan@dintorf.com'
+		},
+		{
+			icon: 'globe',
+			link: true,
+			href: 'http://www.dintorf.com',
+			content: 'dintorf.com'
 		}
 	];
 

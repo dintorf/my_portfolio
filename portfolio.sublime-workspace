@@ -123,7 +123,48 @@
 			"file": "public/index.html",
 			"settings":
 			{
-				"buffer_size": 814,
+				"buffer_size": 904,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/views/main.html",
+			"settings":
+			{
+				"buffer_size": 534,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/views/partials/about.html",
+			"settings":
+			{
+				"buffer_size": 1203,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/views/partials/skills.html",
+			"settings":
+			{
+				"buffer_size": 711,
+				"line_ending": "Unix",
+				"name": "skills.html"
+			}
+		},
+		{
+			"file": "Gruntfile.js",
+			"settings":
+			{
+				"buffer_size": 3822,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/src/css/main.css",
+			"settings":
+			{
+				"buffer_size": 4725,
 				"line_ending": "Unix"
 			}
 		},
@@ -131,7 +172,7 @@
 			"file": "public/src/js/controllers.js",
 			"settings":
 			{
-				"buffer_size": 856,
+				"buffer_size": 1194,
 				"line_ending": "Unix"
 			}
 		},
@@ -142,14 +183,6 @@
 				"buffer_size": 257,
 				"line_ending": "Unix",
 				"name": "app.js"
-			}
-		},
-		{
-			"file": "Gruntfile.js",
-			"settings":
-			{
-				"buffer_size": 1497,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -208,13 +241,18 @@
 	[
 		"/Users/dintorf/Developer/MyPortfolio",
 		"/Users/dintorf/Developer/MyPortfolio/public",
-		"/Users/dintorf/Developer/MyPortfolio/public/lib",
-		"/Users/dintorf/Developer/MyPortfolio/public/lib/jquery/src",
+		"/Users/dintorf/Developer/MyPortfolio/public/lib/fontawesome/css",
 		"/Users/dintorf/Developer/MyPortfolio/public/src",
-		"/Users/dintorf/Developer/MyPortfolio/public/src/js"
+		"/Users/dintorf/Developer/MyPortfolio/public/views"
 	],
 	"file_history":
 	[
+		"/Users/dintorf/Developer/MyPortfolio/public/views/partials/banner.html",
+		"/Users/dintorf/Developer/MyPortfolio/package.json",
+		"/Users/dintorf/Developer/MyPortfolio/public/views/navbar.html",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/css/bootswatch.min.css",
+		"/Users/dintorf/Developer/MyPortfolio/Gruntfile.js",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/dist/css/app.min.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/main.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/main.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/directives.js",
@@ -224,15 +262,12 @@
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/filters.js",
 		"/Users/dintorf/Developer/MyPortfolio/.jshintrc",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/dist/app.min.js",
-		"/Users/dintorf/Developer/MyPortfolio/public/views/navbar.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/github-activity.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/about.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/banner.html",
-		"/Users/dintorf/Developer/MyPortfolio/package.json",
 		"/Users/dintorf/Downloads/11110_10200827350351224_966515426_n.jpg",
 		"/Users/dintorf/Developer/MyPortfolio/public/lib/bootstrap/js/popover.js",
 		"/Users/dintorf/Developer/TutsWebAppAngular/contacts/public/main.html",
-		"/Users/dintorf/Developer/MyPortfolio/public/src/css/bootswatch.min.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/bootstrap.min.css",
 		"/Users/dintorf/wisecode/SECURE/user/facebook.asp",
 		"/Users/dintorf/wisecode/App_Code/WiseAgent/Util/InMemoryTokenManager.cs",
@@ -339,10 +374,7 @@
 		"/Users/dintorf/wisecode/SECURE/javascript/jquery.mixitup.js",
 		"/Users/dintorf/wisecode/SECURE/includes/colorconverter.asp",
 		"/Users/dintorf/wisecode/SECURE/includes/util/infobox.asp",
-		"/Users/dintorf/wisecode/SECURE/assets/css/ace.css",
-		"/Users/dintorf/wisecode/SECURE/assets/css/ui.jqgrid.css",
-		"/Volumes/10.1.11.155/WebsiteFiles/test_sites/test.thewiseagent.com/SECURE/assets/css/ui.jqgrid.css",
-		"/Users/dintorf/wisecode/SECURE/includes/user/InsideTeamMember.asp"
+		"/Users/dintorf/wisecode/SECURE/assets/css/ace.css"
 	],
 	"find":
 	{
@@ -521,22 +553,167 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 814,
+						"buffer_size": 904,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								627,
-								627
+								646,
+								690
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/views/main.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								180,
+								180
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/views/partials/about.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1203,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								139,
+								114
+							]
+						],
+						"settings":
+						{
+							"open_with_edit": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/views/partials/skills.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								695,
+								695
+							]
+						],
+						"settings":
+						{
+							"auto_name": "skills.html",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Gruntfile.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3822,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2820,
+								2820
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1096.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "public/src/css/main.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								295,
+								295
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -546,20 +723,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 6,
 					"file": "public/src/js/controllers.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 856,
+						"buffer_size": 1194,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								697,
+								697
 							]
 						],
 						"settings":
@@ -571,11 +748,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 7,
 					"file": "public/src/js/app.js",
 					"semi_transient": false,
 					"settings":
@@ -600,36 +777,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Gruntfile.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1497,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1440,
-								1440
-							]
-						],
-						"settings":
-						{
-							"open_with_edit": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
