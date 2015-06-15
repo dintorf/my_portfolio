@@ -40824,11 +40824,6 @@ app.config(function ($routeProvider, $locationProvider) {
 				title: 'Windows',
 				label: 'Expert',
 				proficiency: '100%'
-			},
-			{
-				title: 'Windows',
-				label: 'Expert',
-				proficiency: '100%'
 			}
 		];
 	}]);;app.directive('bgImage', function(){
