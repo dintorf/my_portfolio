@@ -166,4 +166,5 @@ app
 				proficiency: '100%'
 			}
 		];
+		
 	}]);
