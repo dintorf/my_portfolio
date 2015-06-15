@@ -164,6 +164,11 @@ app
 				title: 'Windows',
 				label: 'Expert',
 				proficiency: '100%'
+			},
+			{
+				title: 'Windows',
+				label: 'Expert',
+				proficiency: '100%'
 			}
 		];
 	}]);
