@@ -6610,10 +6610,6 @@ body,html{height:100%;width:100%;margin:0;padding:0}.gha-feed{width:100%;height:
 	line-height: 2em;
 }
 
-.info ul, {
-	margin-top: 10;
-}
-
 .section.style2 .well {
 	background-color: #fff;
 }
@@ -6622,13 +6618,18 @@ body,html{height:100%;width:100%;margin:0;padding:0}.gha-feed{width:100%;height:
 	font-size: 14px;
 }
 
+.info .sub-content {
+	font-size: 12px;
+	color: #aaaaaa;
+}
+
 .center {
 	text-align: center;
 }
 
 .section {
 	position: relative;
-	padding: 6em 0 4em 0;
+	padding: 4em 0 4em 0;
 }
 
 .section.style1 {

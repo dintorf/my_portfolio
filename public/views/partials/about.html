@@ -9,11 +9,22 @@
         <p>If you want to know more about me, just ask!</p>
       </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4">
-      <div class="well info">
-      	<h3>Info</h3>
-      	<ul class="list-unstyled"
-      		<li ng-repeat="info in details"> <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center"><i class="fa fa-{{info.icon}}"></i></span><span class="col-lg-10 col-md-10 col-sm-10 col-xs-10"><a ng-if="info.link" class="text-success" href='{{info.href}}'>{{info.content}}</a><span ng-if="!info.link">{{info.content}}</span></span></li>
+    <div class="col-lg-4 col-md-4 col-sm-4" ng-controller="InfoController">
+      <div class="well info" ng-repeat="detail in details">
+      	<h3>{{detail.title}}</h3>
+      	<ul class="list-unstyled">
+      		<li ng-repeat="info in detail.details"> 
+            <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center">
+              <i class="fa fa-{{info.icon}}"></i>
+            </span>
+            <span class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+              <a ng-if="info.link" class="text-success" href='{{info.href}}'>{{info.content}}</a>
+              <span ng-if="!info.link">{{info.content}}</span>
+              <div ng-if="info.subContent">
+                <span class="sub-content">{{info.subContent}}</span>
+              </div>
+            </span>
+          </li>
       	</ul>
       </div>
     </div>
