@@ -40701,6 +40701,8 @@ app.config(function ($routeProvider, $locationProvider) {
 			}
 		];
 
+		$scope.scroll = 0;
+
 		GitHubActivity.feed({
 		    username: "dintorf",
 		    selector: "#feed"
@@ -40760,37 +40762,44 @@ app.config(function ($routeProvider, $locationProvider) {
 			{
 				title: 'JavaScript & jQuery',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'HTML5 & CSS3',
 				label: 'Expert',
-				proficiency: '95%'
+				proficiency: '95%',
+				set: false
 			},
 			{
 				title: 'C# & .NET',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'Swift & Objective-C',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			},
 			{
 				title: 'Java',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'SQL',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'Python',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			}
 		];
 
@@ -40798,34 +40807,46 @@ app.config(function ($routeProvider, $locationProvider) {
 			{
 				title: 'Mac OS X',
 				label: 'Expert',
-				proficiency: '100%'
+				proficiency: '100%',
+				set: false
 			},
 			{
 				title: 'Linux',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'iOS',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'Windows Server',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			},
 			{
 				title: 'Android',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'Windows',
 				label: 'Expert',
-				proficiency: '100%'
+				proficiency: '100%',
+				set: false
 			}
 		];
+
+		$scope.setProg = function(item) {
+			item.set = true;
+			return item.proficiency;
+		}
+		
 	}]);;app.directive('bgImage', function(){
 
     return function(scope, element, attrs) {
@@ -40837,6 +40858,23 @@ app.config(function ($routeProvider, $locationProvider) {
         });
     };
 });
+
+app.directive('scrollPosition', function($window) {
+  return {
+    scope: {
+      scroll: '=scrollPosition'
+    },
+    link: function(scope, element, attrs) {
+      var windowEl = angular.element($window);
+      var handler = function() {
+        scope.scroll = windowEl.scrollTop();
+      }
+      windowEl.on('scroll', scope.$apply.bind(scope, handler));
+      handler();
+    }
+  };
+});
+
 // <a class="twitter-timeline" href="https://twitter.com/dintorf" data-widget-id="608840345837641728">Tweets by @dintorf</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 /*
 *  AngularJS Directive for Twitter's Embedded Timeline with support for custom CSS.
@@ -40844,52 +40882,52 @@ app.config(function ($routeProvider, $locationProvider) {
 */
 
 app.directive('twitterTimeline', [function() {
-		return {
-			restrict: 'A',
-			scope: {
-				cssUrl: "@",
-				autoResize: "="
-			},
-			link: function (scope, element, attrs) {
-				$('body').removeAttr('data-twttr-rendered');
+	return {
+		restrict: 'A',
+		scope: {
+			cssUrl: "@",
+			autoResize: "="
+		},
+		link: function (scope, element, attrs) {
+			$('body').removeAttr('data-twttr-rendered');
 
-				element
-					.attr('id', 'twitter-feed')
-					.attr("width", "100%" || attrs.width)
-					.attr('data-chrome', 'transparent')
-					.attr('data-widget-id', attrs.twitterTimeline)
-					.addClass('twitter-timeline');
+			element
+				.attr('id', 'twitter-feed')
+				.attr("width", "100%" || attrs.width)
+				.attr('data-chrome', 'transparent')
+				.attr('data-widget-id', attrs.twitterTimeline)
+				.addClass('twitter-timeline');
 
-				function render() {
-					var body = $('.twitter-timeline').contents().find('body');
+			function render() {
+				var body = $('.twitter-timeline').contents().find('body');
 
-					if (scope.cssUrl) {
-						body.append($('<link/>', { rel: 'stylesheet', href: scope.cssUrl, type: 'text/css' }));
-					}
+				if (scope.cssUrl) {
+					body.append($('<link/>', { rel: 'stylesheet', href: scope.cssUrl, type: 'text/css' }));
+				}
 
-					function setHeight() {
-						if (body.find('.stream').length == 0) {
-							setTimeout(setHeight, 100);
-						} else {
-							body.find('.stream').addClass('stream-new').removeClass('stream').css('height', 'auto');
-							$('.twitter-timeline').css('height', (body.height() + 20) + 'px');
-						}
-					}
-
-					if (scope.autoResize) {
-						setHeight();
+				function setHeight() {
+					if (body.find('.stream').length == 0) {
+						setTimeout(setHeight, 100);
+					} else {
+						body.find('.stream').addClass('stream-new').removeClass('stream').css('height', 'auto');
+						$('.twitter-timeline').css('height', (body.height() + 20) + 'px');
 					}
 				}
 
-				if (!$('#twitter-wjs').length) {
-					$.getScript((/^http:/.test(document.location)?'http':'https') + '://platform.twitter.com/widgets.js', function() {
-						render();
-						$('.twitter-timeline').load(render);
-	        		});
+				if (scope.autoResize) {
+					setHeight();
 				}
 			}
-		};
-	}]);;app.filter('reverse', function() {
+
+			if (!$('#twitter-wjs').length) {
+				$.getScript((/^http:/.test(document.location)?'http':'https') + '://platform.twitter.com/widgets.js', function() {
+					render();
+					$('.twitter-timeline').load(render);
+        		});
+			}
+		}
+	};
+}]);;app.filter('reverse', function() {
   return function(items) {
     return items.slice().reverse();
   };

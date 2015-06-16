@@ -41,6 +41,8 @@ app
 			}
 		];
 
+		$scope.scroll = 0;
+
 		GitHubActivity.feed({
 		    username: "dintorf",
 		    selector: "#feed"
@@ -100,37 +102,44 @@ app
 			{
 				title: 'JavaScript & jQuery',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'HTML5 & CSS3',
 				label: 'Expert',
-				proficiency: '95%'
+				proficiency: '95%',
+				set: false
 			},
 			{
 				title: 'C# & .NET',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'Swift & Objective-C',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			},
 			{
 				title: 'Java',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'SQL',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'Python',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			}
 		];
 
@@ -138,33 +147,44 @@ app
 			{
 				title: 'Mac OS X',
 				label: 'Expert',
-				proficiency: '100%'
+				proficiency: '100%',
+				set: false
 			},
 			{
 				title: 'Linux',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'iOS',
 				label: 'Pro',
-				proficiency: '85%'
+				proficiency: '85%',
+				set: false
 			},
 			{
 				title: 'Windows Server',
 				label: 'Pro',
-				proficiency: '80%'
+				proficiency: '80%',
+				set: false
 			},
 			{
 				title: 'Android',
 				label: 'Expert',
-				proficiency: '90%'
+				proficiency: '90%',
+				set: false
 			},
 			{
 				title: 'Windows',
 				label: 'Expert',
-				proficiency: '100%'
+				proficiency: '100%',
+				set: false
 			}
 		];
+
+		$scope.setProg = function(item) {
+			item.set = true;
+			return item.proficiency;
+		}
 		
 	}]);
