@@ -6,7 +6,7 @@
 #banner .inner {
 	background: rgba(29,39,38,0.9);
 	display: inline-block;
-	padding: 3.5em 10em;
+	padding: 3.5% 10%;
 	position: relative;
 	z-index: 2;
 }
