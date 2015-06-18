@@ -1,3 +1,7 @@
+.navbar-default {
+	background-color: #2b3e50;
+}
+
 #banner {
 	padding: 10% 0;
 	text-align: center;
@@ -11,12 +15,13 @@
 	z-index: 2;
 }
 
-.well p {
-	line-height: 2em;
+img.media-object {
+	width: 64px;
+	height: 64px;
 }
 
-.section.style2 .well {
-	background-color: #fff;
+.well p {
+	line-height: 2em;
 }
 
 .info .fa.fa-envelope {
@@ -44,12 +49,16 @@
 	box-shadow:0 -1px 15px 0 #000;
 }
 
-.section.style2 {
+.section.style2, .section.style2 .well {
 	background: #ffffff;
 }
 
 .section.style3 {
 	background: #f4f4f4;
+}
+
+.section.style4 {
+	background: #2b3e50;
 }
 
 .img-profile {

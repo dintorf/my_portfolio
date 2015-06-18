@@ -1,0 +1,19 @@
+<div class="container-fluid">
+	<div class="row section style2">
+		<div class="container">
+			<ul class="media-list list-group">
+			  <li class="media list-group-item" ng-repeat="repo in repos">
+			    <div class="media-left">
+			      <a href="{{repo.html_url}}" target="_blank">
+			        <img class="media-object" src="{{repo.owner.avatar_url}}" alt="">
+			      </a>
+			    </div>
+			    <div class="media-body">
+			      <h4 class="media-heading">{{repo.name}}</h4>
+			      {{repo.description}}
+			    </div>
+			  </li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -6,7 +6,7 @@ app
 				title: 'Resume'
 			},
 			{
-				href: '#',
+				href: '/projects',
 				title: 'Projects'
 			},
 			{
@@ -15,7 +15,7 @@ app
 			}
 		];
 	}])
-	.controller('MainController', ['$scope', function ($scope, $location) {
+	.controller('MainController', ['$scope','$sce', function ($scope, $sce, $location) {
 		$scope.myPic = '../images/dist/me.jpg';
 		$scope.bgImage = '../images/dist/creek2.jpg';
 		$scope.socialSites = [
@@ -187,4 +187,11 @@ app
 			return item.proficiency;
 		}
 		
+	}])
+	.controller('ProjectsController', ['$scope','GitHubRepos', function ($scope, GitHubRepos, $location) {
+		$scope.repos = [];
+
+		GitHubRepos.query(function(data) {
+		    $scope.repos = data;
+		});
 	}]);

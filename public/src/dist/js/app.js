@@ -11527,7 +11527,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 ;/**
- * @license AngularJS v1.4.0
+ * @license AngularJS v1.4.1
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11585,7 +11585,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.4.0/' +
+    message += '\nhttp://errors.angularjs.org/1.4.1/' +
       (module ? module + '/' : '') + code;
 
     for (i = SKIP_INDEXES, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -12392,9 +12392,18 @@ function copy(source, destination, stackSource, stackDest) {
 
   if (!destination) {
     destination = source;
-    if (source) {
+    if (isObject(source)) {
+      var index;
+      if (stackSource && (index = stackSource.indexOf(source)) !== -1) {
+        return stackDest[index];
+      }
+
+      // TypedArray, Date and RegExp have specific copy functionality and must be
+      // pushed onto the stack before returning.
+      // Array and other objects create the base object and recurse to copy child
+      // objects. The array/object will be pushed onto the stack when recursed.
       if (isArray(source)) {
-        destination = copy(source, [], stackSource, stackDest);
+        return copy(source, [], stackSource, stackDest);
       } else if (isTypedArray(source)) {
         destination = new source.constructor(source);
       } else if (isDate(source)) {
@@ -12402,9 +12411,14 @@ function copy(source, destination, stackSource, stackDest) {
       } else if (isRegExp(source)) {
         destination = new RegExp(source.source, source.toString().match(/[^\/]*$/)[0]);
         destination.lastIndex = source.lastIndex;
-      } else if (isObject(source)) {
+      } else {
         var emptyObject = Object.create(getPrototypeOf(source));
-        destination = copy(source, emptyObject, stackSource, stackDest);
+        return copy(source, emptyObject, stackSource, stackDest);
+      }
+
+      if (stackDest) {
+        stackSource.push(source);
+        stackDest.push(destination);
       }
     }
   } else {
@@ -12415,9 +12429,6 @@ function copy(source, destination, stackSource, stackDest) {
     stackDest = stackDest || [];
 
     if (isObject(source)) {
-      var index = stackSource.indexOf(source);
-      if (index !== -1) return stackDest[index];
-
       stackSource.push(source);
       stackDest.push(destination);
     }
@@ -12426,12 +12437,7 @@ function copy(source, destination, stackSource, stackDest) {
     if (isArray(source)) {
       destination.length = 0;
       for (var i = 0; i < source.length; i++) {
-        result = copy(source[i], null, stackSource, stackDest);
-        if (isObject(source[i])) {
-          stackSource.push(source[i]);
-          stackDest.push(result);
-        }
-        destination.push(result);
+        destination.push(copy(source[i], null, stackSource, stackDest));
       }
     } else {
       var h = destination.$$hashKey;
@@ -12445,20 +12451,20 @@ function copy(source, destination, stackSource, stackDest) {
       if (isBlankObject(source)) {
         // createMap() fast path --- Safe to avoid hasOwnProperty check because prototype chain is empty
         for (key in source) {
-          putValue(key, source[key], destination, stackSource, stackDest);
+          destination[key] = copy(source[key], null, stackSource, stackDest);
         }
       } else if (source && typeof source.hasOwnProperty === 'function') {
         // Slow path, which must rely on hasOwnProperty
         for (key in source) {
           if (source.hasOwnProperty(key)) {
-            putValue(key, source[key], destination, stackSource, stackDest);
+            destination[key] = copy(source[key], null, stackSource, stackDest);
           }
         }
       } else {
         // Slowest path --- hasOwnProperty can't be called as a method
         for (key in source) {
           if (hasOwnProperty.call(source, key)) {
-            putValue(key, source[key], destination, stackSource, stackDest);
+            destination[key] = copy(source[key], null, stackSource, stackDest);
           }
         }
       }
@@ -12466,16 +12472,6 @@ function copy(source, destination, stackSource, stackDest) {
     }
   }
   return destination;
-
-  function putValue(key, val, destination, stackSource, stackDest) {
-    // No context allocation, trivial outer scope, easily inlined
-    var result = copy(val, null, stackSource, stackDest);
-    if (isObject(val)) {
-      stackSource.push(val);
-      stackDest.push(result);
-    }
-    destination[key] = result;
-  }
 }
 
 /**
@@ -13533,7 +13529,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link auto.$provide#provider $provide.provider()}.
            */
-          provider: invokeLater('$provide', 'provider'),
+          provider: invokeLaterAndSetModuleName('$provide', 'provider'),
 
           /**
            * @ngdoc method
@@ -13544,7 +13540,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link auto.$provide#factory $provide.factory()}.
            */
-          factory: invokeLater('$provide', 'factory'),
+          factory: invokeLaterAndSetModuleName('$provide', 'factory'),
 
           /**
            * @ngdoc method
@@ -13555,7 +13551,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link auto.$provide#service $provide.service()}.
            */
-          service: invokeLater('$provide', 'service'),
+          service: invokeLaterAndSetModuleName('$provide', 'service'),
 
           /**
            * @ngdoc method
@@ -13590,7 +13586,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link auto.$provide#decorator $provide.decorator()}.
            */
-          decorator: invokeLater('$provide', 'decorator'),
+          decorator: invokeLaterAndSetModuleName('$provide', 'decorator'),
 
           /**
            * @ngdoc method
@@ -13624,7 +13620,7 @@ function setupModuleLoader(window) {
            * See {@link ng.$animateProvider#register $animateProvider.register()} and
            * {@link ngAnimate ngAnimate module} for more information.
            */
-          animation: invokeLater('$animateProvider', 'register'),
+          animation: invokeLaterAndSetModuleName('$animateProvider', 'register'),
 
           /**
            * @ngdoc method
@@ -13642,7 +13638,7 @@ function setupModuleLoader(window) {
            * (`myapp_subsection_filterx`).
            * </div>
            */
-          filter: invokeLater('$filterProvider', 'register'),
+          filter: invokeLaterAndSetModuleName('$filterProvider', 'register'),
 
           /**
            * @ngdoc method
@@ -13654,7 +13650,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link ng.$controllerProvider#register $controllerProvider.register()}.
            */
-          controller: invokeLater('$controllerProvider', 'register'),
+          controller: invokeLaterAndSetModuleName('$controllerProvider', 'register'),
 
           /**
            * @ngdoc method
@@ -13667,7 +13663,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link ng.$compileProvider#directive $compileProvider.directive()}.
            */
-          directive: invokeLater('$compileProvider', 'directive'),
+          directive: invokeLaterAndSetModuleName('$compileProvider', 'directive'),
 
           /**
            * @ngdoc method
@@ -13714,6 +13710,19 @@ function setupModuleLoader(window) {
           if (!queue) queue = invokeQueue;
           return function() {
             queue[insertMethod || 'push']([provider, method, arguments]);
+            return moduleInstance;
+          };
+        }
+
+        /**
+         * @param {string} provider
+         * @param {string} method
+         * @returns {angular.Module}
+         */
+        function invokeLaterAndSetModuleName(provider, method) {
+          return function(recipeName, factoryFunction) {
+            if (factoryFunction && isFunction(factoryFunction)) factoryFunction.$$moduleName = name;
+            invokeQueue.push([provider, method, arguments]);
             return moduleInstance;
           };
         }
@@ -13860,11 +13869,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.4.0',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.4.1',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 4,
-  dot: 0,
-  codeName: 'jaracimrman-existence'
+  dot: 1,
+  codeName: 'hyperionic-illumination'
 };
 
 
@@ -14188,6 +14197,13 @@ function jqLiteAcceptsData(node) {
   // Otherwise we are only interested in elements (1) and documents (9)
   var nodeType = node.nodeType;
   return nodeType === NODE_TYPE_ELEMENT || !nodeType || nodeType === NODE_TYPE_DOCUMENT;
+}
+
+function jqLiteHasData(node) {
+  for (var key in jqCache[node.ng339]) {
+    return true;
+  }
+  return false;
 }
 
 function jqLiteBuildFragment(html, context) {
@@ -14564,7 +14580,8 @@ function getAliasedAttrName(element, name) {
 
 forEach({
   data: jqLiteData,
-  removeData: jqLiteRemoveData
+  removeData: jqLiteRemoveData,
+  hasData: jqLiteHasData
 }, function(fn, name) {
   JQLite[name] = fn;
 });
@@ -15773,7 +15790,7 @@ function createInjector(modulesToLoad, strictDi) {
           }));
 
 
-  forEach(loadModules(modulesToLoad), function(fn) { instanceInjector.invoke(fn || noop); });
+  forEach(loadModules(modulesToLoad), function(fn) { if (fn) instanceInjector.invoke(fn); });
 
   return instanceInjector;
 
@@ -16996,7 +17013,7 @@ function Browser(window, document, $log, $sniffer) {
         // Do the assignment again so that those two variables are referentially identical.
         lastHistoryState = cachedState;
       } else {
-        if (!sameBase) {
+        if (!sameBase || reloadLocation) {
           reloadLocation = url;
         }
         if (replace) {
@@ -18002,12 +18019,15 @@ function $TemplateCacheProvider() {
  *   * `controller` - the directive's required controller instance(s) - Instances are shared
  *     among all directives, which allows the directives to use the controllers as a communication
  *     channel. The exact value depends on the directive's `require` property:
+ *       * no controller(s) required: the directive's own controller, or `undefined` if it doesn't have one
  *       * `string`: the controller instance
  *       * `array`: array of controller instances
- *       * no controller(s) required: `undefined`
  *
  *     If a required controller cannot be found, and it is optional, the instance is `null`,
  *     otherwise the {@link error:$compile:ctreq Missing Required Controller} error is thrown.
+ *
+ *     Note that you can also require the directive's own controller - it will be made available like
+ *     like any other controller.
  *
  *   * `transcludeFn` - A transclude linking function pre-bound to the correct transclusion scope.
  *     This is the same as the `$transclude`
@@ -18455,6 +18475,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                 if (isObject(bindings.isolateScope)) {
                   directive.$$isolateBindings = bindings.isolateScope;
                 }
+                directive.$$moduleName = directiveFactory.$$moduleName;
                 directives.push(directive);
               } catch (e) {
                 $exceptionHandler(e);
@@ -19026,8 +19047,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
             if (nodeLinkFn.transcludeOnThisElement) {
               childBoundTranscludeFn = createBoundTranscludeFn(
-                  scope, nodeLinkFn.transclude, parentBoundTranscludeFn,
-                  nodeLinkFn.elementTranscludeOnThisElement);
+                  scope, nodeLinkFn.transclude, parentBoundTranscludeFn);
 
             } else if (!nodeLinkFn.templateOnThisElement && parentBoundTranscludeFn) {
               childBoundTranscludeFn = parentBoundTranscludeFn;
@@ -19049,7 +19069,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       }
     }
 
-    function createBoundTranscludeFn(scope, transcludeFn, previousBoundTranscludeFn, elementTransclusion) {
+    function createBoundTranscludeFn(scope, transcludeFn, previousBoundTranscludeFn) {
 
       var boundTranscludeFn = function(transcludedScope, cloneFn, controllers, futureParentElement, containingScope) {
 
@@ -19148,6 +19168,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           }
           break;
         case NODE_TYPE_TEXT: /* Text Node */
+          if (msie === 11) {
+            // Workaround for #11781
+            while (node.parentNode && node.nextSibling && node.nextSibling.nodeType === NODE_TYPE_TEXT) {
+              node.nodeValue = node.nodeValue + node.nextSibling.nodeValue;
+              node.parentNode.removeChild(node.nextSibling);
+            }
+          }
           addTextInterpolateDirective(directives, node.nodeValue);
           break;
         case NODE_TYPE_COMMENT: /* Comment */
@@ -19440,7 +19467,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
       nodeLinkFn.scope = newScopeDirective && newScopeDirective.scope === true;
       nodeLinkFn.transcludeOnThisElement = hasTranscludeDirective;
-      nodeLinkFn.elementTranscludeOnThisElement = hasElementTranscludeDirective;
       nodeLinkFn.templateOnThisElement = hasTemplate;
       nodeLinkFn.transclude = childTranscludeFn;
 
@@ -19601,9 +19627,12 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           for (i in elementControllers) {
             controller = elementControllers[i];
             var controllerResult = controller();
+
             if (controllerResult !== controller.instance) {
+              // If the controller constructor has a return value, overwrite the instance
+              // from setupControllers and update the element data
               controller.instance = controllerResult;
-              $element.data('$' + directive.name + 'Controller', controllerResult);
+              $element.data('$' + i + 'Controller', controllerResult);
               if (controller === controllerForBindings) {
                 // Remove and re-install bindToController bindings
                 thisLinkFn.$$destroyBindings();
@@ -19903,11 +19932,18 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       return a.index - b.index;
     }
 
-
     function assertNoDuplicate(what, previousDirective, directive, element) {
+
+      function wrapModuleNameIfDefined(moduleName) {
+        return moduleName ?
+          (' (module: ' + moduleName + ')') :
+          '';
+      }
+
       if (previousDirective) {
-        throw $compileMinErr('multidir', 'Multiple directives [{0}, {1}] asking for {2} on: {3}',
-            previousDirective.name, directive.name, what, startingTag(element));
+        throw $compileMinErr('multidir', 'Multiple directives [{0}{1}, {2}{3}] asking for {4} on: {5}',
+            previousDirective.name, wrapModuleNameIfDefined(previousDirective.$$moduleName),
+            directive.name, wrapModuleNameIfDefined(directive.$$moduleName), what, startingTag(element));
       }
     }
 
@@ -20088,26 +20124,28 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       var fragment = document.createDocumentFragment();
       fragment.appendChild(firstElementToRemove);
 
-      // Copy over user data (that includes Angular's $scope etc.). Don't copy private
-      // data here because there's no public interface in jQuery to do that and copying over
-      // event listeners (which is the main use of private data) wouldn't work anyway.
-      jqLite(newNode).data(jqLite(firstElementToRemove).data());
+      if (jqLite.hasData(firstElementToRemove)) {
+        // Copy over user data (that includes Angular's $scope etc.). Don't copy private
+        // data here because there's no public interface in jQuery to do that and copying over
+        // event listeners (which is the main use of private data) wouldn't work anyway.
+        jqLite(newNode).data(jqLite(firstElementToRemove).data());
 
-      // Remove data of the replaced element. We cannot just call .remove()
-      // on the element it since that would deallocate scope that is needed
-      // for the new node. Instead, remove the data "manually".
-      if (!jQuery) {
-        delete jqLite.cache[firstElementToRemove[jqLite.expando]];
-      } else {
-        // jQuery 2.x doesn't expose the data storage. Use jQuery.cleanData to clean up after
-        // the replaced element. The cleanData version monkey-patched by Angular would cause
-        // the scope to be trashed and we do need the very same scope to work with the new
-        // element. However, we cannot just cache the non-patched version and use it here as
-        // that would break if another library patches the method after Angular does (one
-        // example is jQuery UI). Instead, set a flag indicating scope destroying should be
-        // skipped this one time.
-        skipDestroyOnNextJQueryCleanData = true;
-        jQuery.cleanData([firstElementToRemove]);
+        // Remove data of the replaced element. We cannot just call .remove()
+        // on the element it since that would deallocate scope that is needed
+        // for the new node. Instead, remove the data "manually".
+        if (!jQuery) {
+          delete jqLite.cache[firstElementToRemove[jqLite.expando]];
+        } else {
+          // jQuery 2.x doesn't expose the data storage. Use jQuery.cleanData to clean up after
+          // the replaced element. The cleanData version monkey-patched by Angular would cause
+          // the scope to be trashed and we do need the very same scope to work with the new
+          // element. However, we cannot just cache the non-patched version and use it here as
+          // that would break if another library patches the method after Angular does (one
+          // example is jQuery UI). Instead, set a flag indicating scope destroying should be
+          // skipped this one time.
+          skipDestroyOnNextJQueryCleanData = true;
+          jQuery.cleanData([firstElementToRemove]);
+        }
       }
 
       for (var k = 1, kk = elementsToRemove.length; k < kk; k++) {
@@ -20148,9 +20186,19 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         lastValue,
         parentGet, parentSet, compare;
 
+        if (!hasOwnProperty.call(attrs, attrName)) {
+          // In the case of user defined a binding with the same name as a method in Object.prototype but didn't set
+          // the corresponding attribute. We need to make sure subsequent code won't access to the prototype function
+          attrs[attrName] = undefined;
+        }
+
         switch (mode) {
 
           case '@':
+            if (!attrs[attrName] && !optional) {
+              destination[scopeName] = undefined;
+            }
+
             attrs.$observe(attrName, function(value) {
               destination[scopeName] = value;
             });
@@ -20167,6 +20215,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
               return;
             }
             parentGet = $parse(attrs[attrName]);
+
             if (parentGet.literal) {
               compare = equals;
             } else {
@@ -20205,9 +20254,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             break;
 
           case '&':
-            // Don't assign Object.prototype method to scope
-            if (!attrs.hasOwnProperty(attrName) && optional) break;
-
             parentGet = $parse(attrs[attrName]);
 
             // Don't assign noop to destination if expression is not valid
@@ -20608,13 +20654,17 @@ function $HttpParamSerializerProvider() {
    * @name $httpParamSerializer
    * @description
    *
-   * Default $http params serializer that converts objects to a part of a request URL
+   * Default {@link $http `$http`} params serializer that converts objects to strings
    * according to the following rules:
+   *
    * * `{'foo': 'bar'}` results in `foo=bar`
    * * `{'foo': Date.now()}` results in `foo=2015-04-01T09%3A50%3A49.262Z` (`toISOString()` and encoded representation of a Date object)
    * * `{'foo': ['bar', 'baz']}` results in `foo=bar&foo=baz` (repeated key for each array element)
    * * `{'foo': {'bar':'baz'}}` results in `foo=%7B%22bar%22%3A%22baz%22%7D"` (stringified and encoded representation of an object)
+   *
+   * Note that serializer will sort the request parameters alphabetically.
    * */
+
   this.$get = function() {
     return function ngParamSerializer(params) {
       if (!params) return '';
@@ -20641,7 +20691,43 @@ function $HttpParamSerializerJQLikeProvider() {
    * @name $httpParamSerializerJQLike
    * @description
    *
-   * Alternative $http params serializer that follows jQuery's [`param()`](http://api.jquery.com/jquery.param/) method logic.
+   * Alternative {@link $http `$http`} params serializer that follows
+   * jQuery's [`param()`](http://api.jquery.com/jquery.param/) method logic.
+   * The serializer will also sort the params alphabetically.
+   *
+   * To use it for serializing `$http` request parameters, set it as the `paramSerializer` property:
+   *
+   * ```js
+   * $http({
+   *   url: myUrl,
+   *   method: 'GET',
+   *   params: myParams,
+   *   paramSerializer: '$httpParamSerializerJQLike'
+   * });
+   * ```
+   *
+   * It is also possible to set it as the default `paramSerializer` in the
+   * {@link $httpProvider#defaults `$httpProvider`}.
+   *
+   * Additionally, you can inject the serializer and use it explicitly, for example to serialize
+   * form data for submission:
+   *
+   * ```js
+   * .controller(function($http, $httpParamSerializerJQLike) {
+   *   //...
+   *
+   *   $http({
+   *     url: myUrl,
+   *     method: 'POST',
+   *     data: $httpParamSerializerJQLike(myData),
+   *     headers: {
+   *       'Content-Type': 'application/x-www-form-urlencoded'
+   *     }
+   *   });
+   *
+   * });
+   * ```
+   *
    * */
   this.$get = function() {
     return function jQueryLikeParamSerializer(params) {
@@ -20815,10 +20901,11 @@ function $HttpProvider() {
    *     - **`defaults.headers.put`**
    *     - **`defaults.headers.patch`**
    *
-   * - **`defaults.paramSerializer`** - {string|function(Object<string,string>):string} - A function used to prepare string representation
-   * of request parameters (specified as an object).
-   * If specified as string, it is interpreted as a function registered with the {@link auto.$injector $injector}.
-   * Defaults to {@link ng.$httpParamSerializer $httpParamSerializer}.
+   *
+   * - **`defaults.paramSerializer`** - `{string|function(Object<string,string>):string}` - A function
+   *  used to the prepare string representation of request parameters (specified as an object).
+   *  If specified as string, it is interpreted as a function registered with the {@link auto.$injector $injector}.
+   *  Defaults to {@link ng.$httpParamSerializer $httpParamSerializer}.
    *
    **/
   var defaults = this.defaults = {
@@ -21284,15 +21371,17 @@ function $HttpProvider() {
      * properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
      * or the per-request config object.
      *
+     * In order to prevent collisions in environments where multiple Angular apps share the
+     * same domain or subdomain, we recommend that each application uses unique cookie name.
+     *
      *
      * @param {object} config Object describing the request to be made and how it should be
      *    processed. The object has following properties:
      *
      *    - **method** – `{string}` – HTTP method (e.g. 'GET', 'POST', etc)
      *    - **url** – `{string}` – Absolute or relative URL of the resource that is being requested.
-     *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be turned
-     *      to `?key1=value1&key2=value2` after the url. If the value is not a string, it will be
-     *      JSONified.
+     *    - **params** – `{Object.<string|Object>}` – Map of strings or objects which will be serialized
+     *      with the `paramSerializer` and appended as GET parameters.
      *    - **data** – `{string|Object}` – Data to be sent as the request message data.
      *    - **headers** – `{Object}` – Map of strings or functions which return strings representing
      *      HTTP headers to send to the server. If the return value of a function is null, the
@@ -21310,10 +21399,14 @@ function $HttpProvider() {
      *      transform function or an array of such functions. The transform function takes the http
      *      response body, headers and status and returns its transformed (typically deserialized) version.
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
-     *      Overriding the Default Transformations}
-     *    - **paramSerializer** - {string|function(Object<string,string>):string} - A function used to prepare string representation
-     *      of request parameters (specified as an object).
-     *      Is specified as string, it is interpreted as function registered in with the {$injector}.
+     *      Overriding the Default TransformationjqLiks}
+     *    - **paramSerializer** - `{string|function(Object<string,string>):string}` - A function used to
+     *      prepare the string representation of request parameters (specified as an object).
+     *      If specified as string, it is interpreted as function registered with the
+     *      {@link $injector $injector}, which means you can create your own serializer
+     *      by registering it as a {@link auto.$provide#service service}.
+     *      The default serializer is the {@link $httpParamSerializer $httpParamSerializer};
+     *      alternatively, you can use the {@link $httpParamSerializerJQLike $httpParamSerializerJQLike}
      *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
      *      GET request, otherwise if a cache instance built with
      *      {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
@@ -24741,8 +24834,10 @@ ASTCompiler.prototype = {
               nameId.name = ast.property.name;
             }
           }
-          recursionFn(intoId);
+        }, function() {
+          self.assign(intoId, 'undefined');
         });
+        recursionFn(intoId);
       }, !!create);
       break;
     case AST.CallExpression:
@@ -24780,8 +24875,10 @@ ASTCompiler.prototype = {
             }
             expression = self.ensureSafeObject(expression);
             self.assign(intoId, expression);
-            recursionFn(intoId);
+          }, function() {
+            self.assign(intoId, 'undefined');
           });
+          recursionFn(intoId);
         });
       }
       break;
@@ -26164,6 +26261,19 @@ function qFactory(nextTick, exceptionHandler) {
 
   /**
    * @ngdoc method
+   * @name $q#resolve
+   * @kind function
+   *
+   * @description
+   * Alias of {@link ng.$q#when when} to maintain naming consistency with ES6.
+   *
+   * @param {*} value Value or a promise
+   * @returns {Promise} Returns a promise of the passed value or promise
+   */
+  var resolve = when;
+
+  /**
+   * @ngdoc method
    * @name $q#all
    * @kind function
    *
@@ -26230,6 +26340,7 @@ function qFactory(nextTick, exceptionHandler) {
   $Q.defer = defer;
   $Q.reject = reject;
   $Q.when = when;
+  $Q.resolve = resolve;
   $Q.all = all;
 
   return $Q;
@@ -29539,9 +29650,11 @@ function $FilterProvider($provide) {
  *     `{name: {first: 'John', last: 'Doe'}}` will **not** be matched by `{name: 'John'}`, but
  *     **will** be matched by `{$: 'John'}`.
  *
- *   - `function(value, index)`: A predicate function can be used to write arbitrary filters. The
- *     function is called for each element of `array`. The final result is an array of those
- *     elements that the predicate returned true for.
+ *   - `function(value, index, array)`: A predicate function can be used to write arbitrary filters.
+ *     The function is called for each element of the array, with the element, its index, and
+ *     the entire array itself as arguments.
+ *
+ *     The final result is an array of those elements that the predicate returned true for.
  *
  * @param {function(actual, expected)|true|undefined} comparator Comparator which is used in
  *     determining if the expected value (from the filter expression) and actual value (from
@@ -29842,9 +29955,10 @@ function currencyFilter($locale) {
  * @description
  * Formats a number as text.
  *
+ * If the input is null or undefined, it will just be returned.
+ * If the input is infinite (Infinity/-Infinity) the Infinity symbol '∞' is returned.
  * If the input is not a number an empty string is returned.
  *
- * If the input is an infinite (Infinity/-Infinity) the Infinity symbol '∞' is returned.
  *
  * @param {number|string} number Number to format.
  * @param {(number|string)=} fractionSize Number of decimal places to round the number to.
@@ -30473,7 +30587,7 @@ function limitToFilter() {
  * @description
  * Orders a specified `array` by the `expression` predicate. It is ordered alphabetically
  * for strings and numerically for numbers. Note: if you notice numbers are not being sorted
- * correctly, make sure they are actually being saved as numbers and not strings.
+ * as expected, make sure they are actually being saved as numbers and not strings.
  *
  * @param {Array} array The array to sort.
  * @param {function(*)|string|Array.<(function(*)|string)>=} expression A predicate to be
@@ -30548,19 +30662,40 @@ function limitToFilter() {
                   {name:'Mike', phone:'555-4321', age:21},
                   {name:'Adam', phone:'555-5678', age:35},
                   {name:'Julie', phone:'555-8765', age:29}];
-             $scope.predicate = '-age';
+             $scope.predicate = 'age';
+             $scope.reverse = true;
+             $scope.order = function(predicate) {
+               $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+               $scope.predicate = predicate;
+             };
            }]);
        </script>
+       <style type="text/css">
+         .sortorder:after {
+           content: '\25b2';
+         }
+         .sortorder.reverse:after {
+           content: '\25bc';
+         }
+       </style>
        <div ng-controller="ExampleController">
          <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre>
          <hr/>
          [ <a href="" ng-click="predicate=''">unsorted</a> ]
          <table class="friend">
            <tr>
-             <th><a href="" ng-click="predicate = 'name'; reverse=false">Name</a>
-                 (<a href="" ng-click="predicate = '-name'; reverse=false">^</a>)</th>
-             <th><a href="" ng-click="predicate = 'phone'; reverse=!reverse">Phone Number</a></th>
-             <th><a href="" ng-click="predicate = 'age'; reverse=!reverse">Age</a></th>
+             <th>
+               <a href="" ng-click="order('name')">Name</a>
+               <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+             </th>
+             <th>
+               <a href="" ng-click="order('phone')">Phone Number</a>
+               <span class="sortorder" ng-show="predicate === 'phone'" ng-class="{reverse:reverse}"></span>
+             </th>
+             <th>
+               <a href="" ng-click="order('age')">Age</a>
+               <span class="sortorder" ng-show="predicate === 'age'" ng-class="{reverse:reverse}"></span>
+             </th>
            </tr>
            <tr ng-repeat="friend in friends | orderBy:predicate:reverse">
              <td>{{friend.name}}</td>
@@ -31723,7 +31858,7 @@ var ngFormDirective = formDirectiveFactory(true);
 var ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
 var URL_REGEXP = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
 var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-var NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))\s*$/;
+var NUMBER_REGEXP = /^\s*(\-|\+)?(\d+|(\d*(\.\d*)))([eE][+-]?\d+)?\s*$/;
 var DATE_REGEXP = /^(\d{4})-(\d{2})-(\d{2})$/;
 var DATETIMELOCAL_REGEXP = /^(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d)(?::(\d\d)(\.\d{1,3})?)?$/;
 var WEEK_REGEXP = /^(\d{4})-W(\d\d)$/;
@@ -32321,6 +32456,16 @@ var inputType = {
    * Be aware that a string containing a number is not enough. See the {@link ngModel:numfmt}
    * error docs for more information and an example of how to convert your model if necessary.
    * </div>
+   *
+   * ## Issues with HTML5 constraint validation
+   *
+   * In browsers that follow the
+   * [HTML5 specification](https://html.spec.whatwg.org/multipage/forms.html#number-state-%28type=number%29),
+   * `input[number]` does not work as expected with {@link ngModelOptions `ngModelOptions.allowInvalid`}.
+   * If a non-number is entered in the input, the browser will report the value as an empty string,
+   * which means the view / model values in `ngModel` and subsequently the scope value
+   * will also be an empty string.
+   *
    *
    * @param {string} ngModel Assignable angular expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
@@ -33858,7 +34003,7 @@ function classDirective(name, selector) {
  * @example Example that demonstrates basic bindings via ngClass directive.
    <example>
      <file name="index.html">
-       <p ng-class="{strike: deleted, bold: important, red: error}">Map Syntax Example</p>
+       <p ng-class="{strike: deleted, bold: important, 'has-error': error}">Map Syntax Example</p>
        <label>
           <input type="checkbox" ng-model="deleted">
           deleted (apply "strike" class)
@@ -33869,7 +34014,7 @@ function classDirective(name, selector) {
        </label><br>
        <label>
           <input type="checkbox" ng-model="error">
-          error (apply "red" class)
+          error (apply "has-error" class)
        </label>
        <hr>
        <p ng-class="style">Using String Syntax</p>
@@ -33898,6 +34043,10 @@ function classDirective(name, selector) {
        .red {
            color: red;
        }
+       .has-error {
+           color: red;
+           background-color: yellow;
+       }
        .orange {
            color: orange;
        }
@@ -33908,13 +34057,13 @@ function classDirective(name, selector) {
        it('should let you toggle the class', function() {
 
          expect(ps.first().getAttribute('class')).not.toMatch(/bold/);
-         expect(ps.first().getAttribute('class')).not.toMatch(/red/);
+         expect(ps.first().getAttribute('class')).not.toMatch(/has-error/);
 
          element(by.model('important')).click();
          expect(ps.first().getAttribute('class')).toMatch(/bold/);
 
          element(by.model('error')).click();
-         expect(ps.first().getAttribute('class')).toMatch(/red/);
+         expect(ps.first().getAttribute('class')).toMatch(/has-error/);
        });
 
        it('should let you toggle string example', function() {
@@ -36748,7 +36897,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
  *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
  *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
  *     custom value for each event. For example:
- *     `ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"`
+ *     `ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"`
  *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
  *     not validate correctly instead of the default behavior of setting the model to undefined.
  *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
@@ -36998,7 +37147,9 @@ function addSetValidityMethod(context) {
 function isObjectEmpty(obj) {
   if (obj) {
     for (var prop in obj) {
-      return false;
+      if (obj.hasOwnProperty(prop)) {
+        return false;
+      }
     }
   }
   return true;
@@ -37341,6 +37492,7 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
         values = values || [];
 
         Object.keys(values).forEach(function getWatchable(key) {
+          if (key.charAt(0) === '$') return;
           var locals = getLocals(values[key], key);
           var selectValue = getTrackByValueFn(values[key], locals);
           watchedArray.push(selectValue);
@@ -37744,8 +37896,7 @@ var ngOptionsDirective = ['$compile', '$parse', function($compile, $parse) {
         // Check to see if the value has changed due to the update to the options
         if (!ngModelCtrl.$isEmpty(previousValue)) {
           var nextValue = selectCtrl.readValue();
-          if (ngOptions.trackBy && !equals(previousValue, nextValue) ||
-                previousValue !== nextValue) {
+          if (ngOptions.trackBy ? !equals(previousValue, nextValue) : previousValue !== nextValue) {
             ngModelCtrl.$setViewValue(nextValue);
             ngModelCtrl.$render();
           }
@@ -38093,6 +38244,15 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *    </div>
  * ```
  *
+ * <div class="alert alert-warning">
+ * **Note:** `track by` must always be the last expression:
+ * </div>
+ * ```
+ * <div ng-repeat="model in collection | orderBy: 'id' as filtered_result track by model.id">
+ *     {{model.name}}
+ * </div>
+ * ```
+ *
  * # Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
@@ -38164,8 +38324,9 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *     which can be used to associate the objects in the collection with the DOM elements. If no tracking expression
  *     is specified, ng-repeat associates elements by identity. It is an error to have
  *     more than one tracking expression value resolve to the same key. (This would mean that two distinct objects are
- *     mapped to the same DOM element, which is not possible.)  If filters are used in the expression, they should be
- *     applied before the tracking expression.
+ *     mapped to the same DOM element, which is not possible.)
+ *
+ *     Note that the tracking expression must come last, after any filters, and the alias expression.
  *
  *     For example: `item in items` is equivalent to `item in items track by $id(item)`. This implies that the DOM elements
  *     will be associated by item identity in the array.
@@ -40649,14 +40810,687 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 
 })(window, window.angular);
-;var app = angular.module('PortfolioApp', ['ngRoute']);
+;/**
+ * @license AngularJS v1.4.1
+ * (c) 2010-2015 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
+var $resourceMinErr = angular.$$minErr('$resource');
+
+// Helper functions and regex to lookup a dotted path on an object
+// stopping at undefined/null.  The path must be composed of ASCII
+// identifiers (just like $parse)
+var MEMBER_NAME_REGEX = /^(\.[a-zA-Z_$@][0-9a-zA-Z_$@]*)+$/;
+
+function isValidDottedPath(path) {
+  return (path != null && path !== '' && path !== 'hasOwnProperty' &&
+      MEMBER_NAME_REGEX.test('.' + path));
+}
+
+function lookupDottedPath(obj, path) {
+  if (!isValidDottedPath(path)) {
+    throw $resourceMinErr('badmember', 'Dotted member path "@{0}" is invalid.', path);
+  }
+  var keys = path.split('.');
+  for (var i = 0, ii = keys.length; i < ii && obj !== undefined; i++) {
+    var key = keys[i];
+    obj = (obj !== null) ? obj[key] : undefined;
+  }
+  return obj;
+}
+
+/**
+ * Create a shallow copy of an object and clear other fields from the destination
+ */
+function shallowClearAndCopy(src, dst) {
+  dst = dst || {};
+
+  angular.forEach(dst, function(value, key) {
+    delete dst[key];
+  });
+
+  for (var key in src) {
+    if (src.hasOwnProperty(key) && !(key.charAt(0) === '$' && key.charAt(1) === '$')) {
+      dst[key] = src[key];
+    }
+  }
+
+  return dst;
+}
+
+/**
+ * @ngdoc module
+ * @name ngResource
+ * @description
+ *
+ * # ngResource
+ *
+ * The `ngResource` module provides interaction support with RESTful services
+ * via the $resource service.
+ *
+ *
+ * <div doc-module-components="ngResource"></div>
+ *
+ * See {@link ngResource.$resource `$resource`} for usage.
+ */
+
+/**
+ * @ngdoc service
+ * @name $resource
+ * @requires $http
+ *
+ * @description
+ * A factory which creates a resource object that lets you interact with
+ * [RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer) server-side data sources.
+ *
+ * The returned resource object has action methods which provide high-level behaviors without
+ * the need to interact with the low level {@link ng.$http $http} service.
+ *
+ * Requires the {@link ngResource `ngResource`} module to be installed.
+ *
+ * By default, trailing slashes will be stripped from the calculated URLs,
+ * which can pose problems with server backends that do not expect that
+ * behavior.  This can be disabled by configuring the `$resourceProvider` like
+ * this:
+ *
+ * ```js
+     app.config(['$resourceProvider', function($resourceProvider) {
+       // Don't strip trailing slashes from calculated URLs
+       $resourceProvider.defaults.stripTrailingSlashes = false;
+     }]);
+ * ```
+ *
+ * @param {string} url A parameterized URL template with parameters prefixed by `:` as in
+ *   `/user/:username`. If you are using a URL with a port number (e.g.
+ *   `http://example.com:8080/api`), it will be respected.
+ *
+ *   If you are using a url with a suffix, just add the suffix, like this:
+ *   `$resource('http://example.com/resource.json')` or `$resource('http://example.com/:id.json')`
+ *   or even `$resource('http://example.com/resource/:resource_id.:format')`
+ *   If the parameter before the suffix is empty, :resource_id in this case, then the `/.` will be
+ *   collapsed down to a single `.`.  If you need this sequence to appear and not collapse then you
+ *   can escape it with `/\.`.
+ *
+ * @param {Object=} paramDefaults Default values for `url` parameters. These can be overridden in
+ *   `actions` methods. If any of the parameter value is a function, it will be executed every time
+ *   when a param value needs to be obtained for a request (unless the param was overridden).
+ *
+ *   Each key value in the parameter object is first bound to url template if present and then any
+ *   excess keys are appended to the url search query after the `?`.
+ *
+ *   Given a template `/path/:verb` and parameter `{verb:'greet', salutation:'Hello'}` results in
+ *   URL `/path/greet?salutation=Hello`.
+ *
+ *   If the parameter value is prefixed with `@` then the value for that parameter will be extracted
+ *   from the corresponding property on the `data` object (provided when calling an action method).  For
+ *   example, if the `defaultParam` object is `{someParam: '@someProp'}` then the value of `someParam`
+ *   will be `data.someProp`.
+ *
+ * @param {Object.<Object>=} actions Hash with declaration of custom actions that should extend
+ *   the default set of resource actions. The declaration should be created in the format of {@link
+ *   ng.$http#usage $http.config}:
+ *
+ *       {action1: {method:?, params:?, isArray:?, headers:?, ...},
+ *        action2: {method:?, params:?, isArray:?, headers:?, ...},
+ *        ...}
+ *
+ *   Where:
+ *
+ *   - **`action`** – {string} – The name of action. This name becomes the name of the method on
+ *     your resource object.
+ *   - **`method`** – {string} – Case insensitive HTTP method (e.g. `GET`, `POST`, `PUT`,
+ *     `DELETE`, `JSONP`, etc).
+ *   - **`params`** – {Object=} – Optional set of pre-bound parameters for this action. If any of
+ *     the parameter value is a function, it will be executed every time when a param value needs to
+ *     be obtained for a request (unless the param was overridden).
+ *   - **`url`** – {string} – action specific `url` override. The url templating is supported just
+ *     like for the resource-level urls.
+ *   - **`isArray`** – {boolean=} – If true then the returned object for this action is an array,
+ *     see `returns` section.
+ *   - **`transformRequest`** –
+ *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+ *     transform function or an array of such functions. The transform function takes the http
+ *     request body and headers and returns its transformed (typically serialized) version.
+ *     By default, transformRequest will contain one function that checks if the request data is
+ *     an object and serializes to using `angular.toJson`. To prevent this behavior, set
+ *     `transformRequest` to an empty array: `transformRequest: []`
+ *   - **`transformResponse`** –
+ *     `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+ *     transform function or an array of such functions. The transform function takes the http
+ *     response body and headers and returns its transformed (typically deserialized) version.
+ *     By default, transformResponse will contain one function that checks if the response looks like
+ *     a JSON string and deserializes it using `angular.fromJson`. To prevent this behavior, set
+ *     `transformResponse` to an empty array: `transformResponse: []`
+ *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
+ *     GET request, otherwise if a cache instance built with
+ *     {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
+ *     caching.
+ *   - **`timeout`** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise} that
+ *     should abort the request when resolved.
+ *   - **`withCredentials`** - `{boolean}` - whether to set the `withCredentials` flag on the
+ *     XHR object. See
+ *     [requests with credentials](https://developer.mozilla.org/en/http_access_control#section_5)
+ *     for more information.
+ *   - **`responseType`** - `{string}` - see
+ *     [requestType](https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType).
+ *   - **`interceptor`** - `{Object=}` - The interceptor object has two optional methods -
+ *     `response` and `responseError`. Both `response` and `responseError` interceptors get called
+ *     with `http response` object. See {@link ng.$http $http interceptors}.
+ *
+ * @param {Object} options Hash with custom settings that should extend the
+ *   default `$resourceProvider` behavior.  The only supported option is
+ *
+ *   Where:
+ *
+ *   - **`stripTrailingSlashes`** – {boolean} – If true then the trailing
+ *   slashes from any calculated URL will be stripped. (Defaults to true.)
+ *
+ * @returns {Object} A resource "class" object with methods for the default set of resource actions
+ *   optionally extended with custom `actions`. The default set contains these actions:
+ *   ```js
+ *   { 'get':    {method:'GET'},
+ *     'save':   {method:'POST'},
+ *     'query':  {method:'GET', isArray:true},
+ *     'remove': {method:'DELETE'},
+ *     'delete': {method:'DELETE'} };
+ *   ```
+ *
+ *   Calling these methods invoke an {@link ng.$http} with the specified http method,
+ *   destination and parameters. When the data is returned from the server then the object is an
+ *   instance of the resource class. The actions `save`, `remove` and `delete` are available on it
+ *   as  methods with the `$` prefix. This allows you to easily perform CRUD operations (create,
+ *   read, update, delete) on server-side data like this:
+ *   ```js
+ *   var User = $resource('/user/:userId', {userId:'@id'});
+ *   var user = User.get({userId:123}, function() {
+ *     user.abc = true;
+ *     user.$save();
+ *   });
+ *   ```
+ *
+ *   It is important to realize that invoking a $resource object method immediately returns an
+ *   empty reference (object or array depending on `isArray`). Once the data is returned from the
+ *   server the existing reference is populated with the actual data. This is a useful trick since
+ *   usually the resource is assigned to a model which is then rendered by the view. Having an empty
+ *   object results in no rendering, once the data arrives from the server then the object is
+ *   populated with the data and the view automatically re-renders itself showing the new data. This
+ *   means that in most cases one never has to write a callback function for the action methods.
+ *
+ *   The action methods on the class object or instance object can be invoked with the following
+ *   parameters:
+ *
+ *   - HTTP GET "class" actions: `Resource.action([parameters], [success], [error])`
+ *   - non-GET "class" actions: `Resource.action([parameters], postData, [success], [error])`
+ *   - non-GET instance actions:  `instance.$action([parameters], [success], [error])`
+ *
+ *
+ *   Success callback is called with (value, responseHeaders) arguments. Error callback is called
+ *   with (httpResponse) argument.
+ *
+ *   Class actions return empty instance (with additional properties below).
+ *   Instance actions return promise of the action.
+ *
+ *   The Resource instances and collection have these additional properties:
+ *
+ *   - `$promise`: the {@link ng.$q promise} of the original server interaction that created this
+ *     instance or collection.
+ *
+ *     On success, the promise is resolved with the same resource instance or collection object,
+ *     updated with data from server. This makes it easy to use in
+ *     {@link ngRoute.$routeProvider resolve section of $routeProvider.when()} to defer view
+ *     rendering until the resource(s) are loaded.
+ *
+ *     On failure, the promise is resolved with the {@link ng.$http http response} object, without
+ *     the `resource` property.
+ *
+ *     If an interceptor object was provided, the promise will instead be resolved with the value
+ *     returned by the interceptor.
+ *
+ *   - `$resolved`: `true` after first server interaction is completed (either with success or
+ *      rejection), `false` before that. Knowing if the Resource has been resolved is useful in
+ *      data-binding.
+ *
+ * @example
+ *
+ * # Credit card resource
+ *
+ * ```js
+     // Define CreditCard class
+     var CreditCard = $resource('/user/:userId/card/:cardId',
+      {userId:123, cardId:'@id'}, {
+       charge: {method:'POST', params:{charge:true}}
+      });
+
+     // We can retrieve a collection from the server
+     var cards = CreditCard.query(function() {
+       // GET: /user/123/card
+       // server returns: [ {id:456, number:'1234', name:'Smith'} ];
+
+       var card = cards[0];
+       // each item is an instance of CreditCard
+       expect(card instanceof CreditCard).toEqual(true);
+       card.name = "J. Smith";
+       // non GET methods are mapped onto the instances
+       card.$save();
+       // POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}
+       // server returns: {id:456, number:'1234', name: 'J. Smith'};
+
+       // our custom method is mapped as well.
+       card.$charge({amount:9.99});
+       // POST: /user/123/card/456?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
+     });
+
+     // we can create an instance as well
+     var newCard = new CreditCard({number:'0123'});
+     newCard.name = "Mike Smith";
+     newCard.$save();
+     // POST: /user/123/card {number:'0123', name:'Mike Smith'}
+     // server returns: {id:789, number:'0123', name: 'Mike Smith'};
+     expect(newCard.id).toEqual(789);
+ * ```
+ *
+ * The object returned from this function execution is a resource "class" which has "static" method
+ * for each action in the definition.
+ *
+ * Calling these methods invoke `$http` on the `url` template with the given `method`, `params` and
+ * `headers`.
+ * When the data is returned from the server then the object is an instance of the resource type and
+ * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
+ * operations (create, read, update, delete) on server-side data.
+
+   ```js
+     var User = $resource('/user/:userId', {userId:'@id'});
+     User.get({userId:123}, function(user) {
+       user.abc = true;
+       user.$save();
+     });
+   ```
+ *
+ * It's worth noting that the success callback for `get`, `query` and other methods gets passed
+ * in the response that came from the server as well as $http header getter function, so one
+ * could rewrite the above example and get access to http headers as:
+ *
+   ```js
+     var User = $resource('/user/:userId', {userId:'@id'});
+     User.get({userId:123}, function(u, getResponseHeaders){
+       u.abc = true;
+       u.$save(function(u, putResponseHeaders) {
+         //u => saved user object
+         //putResponseHeaders => $http header getter
+       });
+     });
+   ```
+ *
+ * You can also access the raw `$http` promise via the `$promise` property on the object returned
+ *
+   ```
+     var User = $resource('/user/:userId', {userId:'@id'});
+     User.get({userId:123})
+         .$promise.then(function(user) {
+           $scope.user = user;
+         });
+   ```
+
+ * # Creating a custom 'PUT' request
+ * In this example we create a custom method on our resource to make a PUT request
+ * ```js
+ *    var app = angular.module('app', ['ngResource', 'ngRoute']);
+ *
+ *    // Some APIs expect a PUT request in the format URL/object/ID
+ *    // Here we are creating an 'update' method
+ *    app.factory('Notes', ['$resource', function($resource) {
+ *    return $resource('/notes/:id', null,
+ *        {
+ *            'update': { method:'PUT' }
+ *        });
+ *    }]);
+ *
+ *    // In our controller we get the ID from the URL using ngRoute and $routeParams
+ *    // We pass in $routeParams and our Notes factory along with $scope
+ *    app.controller('NotesCtrl', ['$scope', '$routeParams', 'Notes',
+                                      function($scope, $routeParams, Notes) {
+ *    // First get a note object from the factory
+ *    var note = Notes.get({ id:$routeParams.id });
+ *    $id = note.id;
+ *
+ *    // Now call update passing in the ID first then the object you are updating
+ *    Notes.update({ id:$id }, note);
+ *
+ *    // This will PUT /notes/ID with the note object in the request payload
+ *    }]);
+ * ```
+ */
+angular.module('ngResource', ['ng']).
+  provider('$resource', function() {
+    var provider = this;
+
+    this.defaults = {
+      // Strip slashes by default
+      stripTrailingSlashes: true,
+
+      // Default actions configuration
+      actions: {
+        'get': {method: 'GET'},
+        'save': {method: 'POST'},
+        'query': {method: 'GET', isArray: true},
+        'remove': {method: 'DELETE'},
+        'delete': {method: 'DELETE'}
+      }
+    };
+
+    this.$get = ['$http', '$q', function($http, $q) {
+
+      var noop = angular.noop,
+        forEach = angular.forEach,
+        extend = angular.extend,
+        copy = angular.copy,
+        isFunction = angular.isFunction;
+
+      /**
+       * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
+       * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set
+       * (pchar) allowed in path segments:
+       *    segment       = *pchar
+       *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+       *    pct-encoded   = "%" HEXDIG HEXDIG
+       *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+       *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+       *                     / "*" / "+" / "," / ";" / "="
+       */
+      function encodeUriSegment(val) {
+        return encodeUriQuery(val, true).
+          replace(/%26/gi, '&').
+          replace(/%3D/gi, '=').
+          replace(/%2B/gi, '+');
+      }
+
+
+      /**
+       * This method is intended for encoding *key* or *value* parts of query component. We need a
+       * custom method because encodeURIComponent is too aggressive and encodes stuff that doesn't
+       * have to be encoded per http://tools.ietf.org/html/rfc3986:
+       *    query       = *( pchar / "/" / "?" )
+       *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+       *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+       *    pct-encoded   = "%" HEXDIG HEXDIG
+       *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+       *                     / "*" / "+" / "," / ";" / "="
+       */
+      function encodeUriQuery(val, pctEncodeSpaces) {
+        return encodeURIComponent(val).
+          replace(/%40/gi, '@').
+          replace(/%3A/gi, ':').
+          replace(/%24/g, '$').
+          replace(/%2C/gi, ',').
+          replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
+      }
+
+      function Route(template, defaults) {
+        this.template = template;
+        this.defaults = extend({}, provider.defaults, defaults);
+        this.urlParams = {};
+      }
+
+      Route.prototype = {
+        setUrlParams: function(config, params, actionUrl) {
+          var self = this,
+            url = actionUrl || self.template,
+            val,
+            encodedVal;
+
+          var urlParams = self.urlParams = {};
+          forEach(url.split(/\W/), function(param) {
+            if (param === 'hasOwnProperty') {
+              throw $resourceMinErr('badname', "hasOwnProperty is not a valid parameter name.");
+            }
+            if (!(new RegExp("^\\d+$").test(param)) && param &&
+              (new RegExp("(^|[^\\\\]):" + param + "(\\W|$)").test(url))) {
+              urlParams[param] = true;
+            }
+          });
+          url = url.replace(/\\:/g, ':');
+
+          params = params || {};
+          forEach(self.urlParams, function(_, urlParam) {
+            val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
+            if (angular.isDefined(val) && val !== null) {
+              encodedVal = encodeUriSegment(val);
+              url = url.replace(new RegExp(":" + urlParam + "(\\W|$)", "g"), function(match, p1) {
+                return encodedVal + p1;
+              });
+            } else {
+              url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W|$)", "g"), function(match,
+                  leadingSlashes, tail) {
+                if (tail.charAt(0) == '/') {
+                  return tail;
+                } else {
+                  return leadingSlashes + tail;
+                }
+              });
+            }
+          });
+
+          // strip trailing slashes and set the url (unless this behavior is specifically disabled)
+          if (self.defaults.stripTrailingSlashes) {
+            url = url.replace(/\/+$/, '') || '/';
+          }
+
+          // then replace collapse `/.` if found in the last URL path segment before the query
+          // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
+          url = url.replace(/\/\.(?=\w+($|\?))/, '.');
+          // replace escaped `/\.` with `/.`
+          config.url = url.replace(/\/\\\./, '/.');
+
+
+          // set params - delegate param encoding to $http
+          forEach(params, function(value, key) {
+            if (!self.urlParams[key]) {
+              config.params = config.params || {};
+              config.params[key] = value;
+            }
+          });
+        }
+      };
+
+
+      function resourceFactory(url, paramDefaults, actions, options) {
+        var route = new Route(url, options);
+
+        actions = extend({}, provider.defaults.actions, actions);
+
+        function extractParams(data, actionParams) {
+          var ids = {};
+          actionParams = extend({}, paramDefaults, actionParams);
+          forEach(actionParams, function(value, key) {
+            if (isFunction(value)) { value = value(); }
+            ids[key] = value && value.charAt && value.charAt(0) == '@' ?
+              lookupDottedPath(data, value.substr(1)) : value;
+          });
+          return ids;
+        }
+
+        function defaultResponseInterceptor(response) {
+          return response.resource;
+        }
+
+        function Resource(value) {
+          shallowClearAndCopy(value || {}, this);
+        }
+
+        Resource.prototype.toJSON = function() {
+          var data = extend({}, this);
+          delete data.$promise;
+          delete data.$resolved;
+          return data;
+        };
+
+        forEach(actions, function(action, name) {
+          var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
+
+          Resource[name] = function(a1, a2, a3, a4) {
+            var params = {}, data, success, error;
+
+            /* jshint -W086 */ /* (purposefully fall through case statements) */
+            switch (arguments.length) {
+              case 4:
+                error = a4;
+                success = a3;
+              //fallthrough
+              case 3:
+              case 2:
+                if (isFunction(a2)) {
+                  if (isFunction(a1)) {
+                    success = a1;
+                    error = a2;
+                    break;
+                  }
+
+                  success = a2;
+                  error = a3;
+                  //fallthrough
+                } else {
+                  params = a1;
+                  data = a2;
+                  success = a3;
+                  break;
+                }
+              case 1:
+                if (isFunction(a1)) success = a1;
+                else if (hasBody) data = a1;
+                else params = a1;
+                break;
+              case 0: break;
+              default:
+                throw $resourceMinErr('badargs',
+                  "Expected up to 4 arguments [params, data, success, error], got {0} arguments",
+                  arguments.length);
+            }
+            /* jshint +W086 */ /* (purposefully fall through case statements) */
+
+            var isInstanceCall = this instanceof Resource;
+            var value = isInstanceCall ? data : (action.isArray ? [] : new Resource(data));
+            var httpConfig = {};
+            var responseInterceptor = action.interceptor && action.interceptor.response ||
+              defaultResponseInterceptor;
+            var responseErrorInterceptor = action.interceptor && action.interceptor.responseError ||
+              undefined;
+
+            forEach(action, function(value, key) {
+              if (key != 'params' && key != 'isArray' && key != 'interceptor') {
+                httpConfig[key] = copy(value);
+              }
+            });
+
+            if (hasBody) httpConfig.data = data;
+            route.setUrlParams(httpConfig,
+              extend({}, extractParams(data, action.params || {}), params),
+              action.url);
+
+            var promise = $http(httpConfig).then(function(response) {
+              var data = response.data,
+                promise = value.$promise;
+
+              if (data) {
+                // Need to convert action.isArray to boolean in case it is undefined
+                // jshint -W018
+                if (angular.isArray(data) !== (!!action.isArray)) {
+                  throw $resourceMinErr('badcfg',
+                      'Error in resource configuration for action `{0}`. Expected response to ' +
+                      'contain an {1} but got an {2} (Request: {3} {4})', name, action.isArray ? 'array' : 'object',
+                    angular.isArray(data) ? 'array' : 'object', httpConfig.method, httpConfig.url);
+                }
+                // jshint +W018
+                if (action.isArray) {
+                  value.length = 0;
+                  forEach(data, function(item) {
+                    if (typeof item === "object") {
+                      value.push(new Resource(item));
+                    } else {
+                      // Valid JSON values may be string literals, and these should not be converted
+                      // into objects. These items will not have access to the Resource prototype
+                      // methods, but unfortunately there
+                      value.push(item);
+                    }
+                  });
+                } else {
+                  shallowClearAndCopy(data, value);
+                  value.$promise = promise;
+                }
+              }
+
+              value.$resolved = true;
+
+              response.resource = value;
+
+              return response;
+            }, function(response) {
+              value.$resolved = true;
+
+              (error || noop)(response);
+
+              return $q.reject(response);
+            });
+
+            promise = promise.then(
+              function(response) {
+                var value = responseInterceptor(response);
+                (success || noop)(value, response.headers);
+                return value;
+              },
+              responseErrorInterceptor);
+
+            if (!isInstanceCall) {
+              // we are creating instance / collection
+              // - set the initial promise
+              // - return the instance / collection
+              value.$promise = promise;
+              value.$resolved = false;
+
+              return value;
+            }
+
+            // instance call
+            return promise;
+          };
+
+
+          Resource.prototype['$' + name] = function(params, success, error) {
+            if (isFunction(params)) {
+              error = success; success = params; params = {};
+            }
+            var result = Resource[name].call(this, params, this, success, error);
+            return result.$promise || result;
+          };
+        });
+
+        Resource.bind = function(additionalParamDefaults) {
+          return resourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
+        };
+
+        return Resource;
+      }
+
+      return resourceFactory;
+    }];
+  });
+
+
+})(window, window.angular);
+;var app = angular.module('PortfolioApp', ['ngRoute','ngResource']);
 
 app.config(function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			controller: 'MainController',
 			templateUrl: 'views/main.html'
-		});
+		})
+		.when('/projects', {
+			controller: 'ProjectsController',
+			templateUrl: 'views/projects.html'
+		})
+		.otherwise('/');
 	$locationProvider.html5Mode(true);
 });;app
 	.controller('NavController', ['$scope', function ($scope, $location) {
@@ -40666,7 +41500,7 @@ app.config(function ($routeProvider, $locationProvider) {
 				title: 'Resume'
 			},
 			{
-				href: '#',
+				href: '/projects',
 				title: 'Projects'
 			},
 			{
@@ -40675,7 +41509,7 @@ app.config(function ($routeProvider, $locationProvider) {
 			}
 		];
 	}])
-	.controller('MainController', ['$scope', function ($scope, $location) {
+	.controller('MainController', ['$scope','$sce', function ($scope, $sce, $location) {
 		$scope.myPic = '../images/dist/me.jpg';
 		$scope.bgImage = '../images/dist/creek2.jpg';
 		$scope.socialSites = [
@@ -40847,6 +41681,13 @@ app.config(function ($routeProvider, $locationProvider) {
 			return item.proficiency;
 		}
 		
+	}])
+	.controller('ProjectsController', ['$scope','GitHubRepos', function ($scope, GitHubRepos, $location) {
+		$scope.repos = [];
+
+		GitHubRepos.query(function(data) {
+		    $scope.repos = data;
+		});
 	}]);;app.directive('bgImage', function(){
 
     return function(scope, element, attrs) {
@@ -40932,4 +41773,9 @@ app.directive('twitterTimeline', [function() {
     return items.slice().reverse();
   };
 });;/*! github-activity - v0.1.1 - Copyright 2014 Casey Scarborough */
-function millisecondsToStr(a){"use strict";function b(a){return a>1?"s ago":" ago"}var c=Math.floor(a/1e3),d=Math.floor(c/31536e3);if(d)return d+" year"+b(d);var e=Math.floor((c%=31536e3)/2592e3);if(e)return e+" month"+b(e);var f=Math.floor((c%=2592e3)/86400);if(f)return f+" day"+b(f);var g=Math.floor((c%=86400)/3600);if(g)return"about "+g+" hour"+b(g);var h=Math.floor((c%=3600)/60);if(h)return h+" minute"+b(h);var i=c%60;return i?i+" second"+b(i):"just now"}function pluralize(a,b){return 1!==b?a+"s":a}function md5cycle(a,b){var c=a[0],d=a[1],e=a[2],f=a[3];c=ff(c,d,e,f,b[0],7,-680876936),f=ff(f,c,d,e,b[1],12,-389564586),e=ff(e,f,c,d,b[2],17,606105819),d=ff(d,e,f,c,b[3],22,-1044525330),c=ff(c,d,e,f,b[4],7,-176418897),f=ff(f,c,d,e,b[5],12,1200080426),e=ff(e,f,c,d,b[6],17,-1473231341),d=ff(d,e,f,c,b[7],22,-45705983),c=ff(c,d,e,f,b[8],7,1770035416),f=ff(f,c,d,e,b[9],12,-1958414417),e=ff(e,f,c,d,b[10],17,-42063),d=ff(d,e,f,c,b[11],22,-1990404162),c=ff(c,d,e,f,b[12],7,1804603682),f=ff(f,c,d,e,b[13],12,-40341101),e=ff(e,f,c,d,b[14],17,-1502002290),d=ff(d,e,f,c,b[15],22,1236535329),c=gg(c,d,e,f,b[1],5,-165796510),f=gg(f,c,d,e,b[6],9,-1069501632),e=gg(e,f,c,d,b[11],14,643717713),d=gg(d,e,f,c,b[0],20,-373897302),c=gg(c,d,e,f,b[5],5,-701558691),f=gg(f,c,d,e,b[10],9,38016083),e=gg(e,f,c,d,b[15],14,-660478335),d=gg(d,e,f,c,b[4],20,-405537848),c=gg(c,d,e,f,b[9],5,568446438),f=gg(f,c,d,e,b[14],9,-1019803690),e=gg(e,f,c,d,b[3],14,-187363961),d=gg(d,e,f,c,b[8],20,1163531501),c=gg(c,d,e,f,b[13],5,-1444681467),f=gg(f,c,d,e,b[2],9,-51403784),e=gg(e,f,c,d,b[7],14,1735328473),d=gg(d,e,f,c,b[12],20,-1926607734),c=hh(c,d,e,f,b[5],4,-378558),f=hh(f,c,d,e,b[8],11,-2022574463),e=hh(e,f,c,d,b[11],16,1839030562),d=hh(d,e,f,c,b[14],23,-35309556),c=hh(c,d,e,f,b[1],4,-1530992060),f=hh(f,c,d,e,b[4],11,1272893353),e=hh(e,f,c,d,b[7],16,-155497632),d=hh(d,e,f,c,b[10],23,-1094730640),c=hh(c,d,e,f,b[13],4,681279174),f=hh(f,c,d,e,b[0],11,-358537222),e=hh(e,f,c,d,b[3],16,-722521979),d=hh(d,e,f,c,b[6],23,76029189),c=hh(c,d,e,f,b[9],4,-640364487),f=hh(f,c,d,e,b[12],11,-421815835),e=hh(e,f,c,d,b[15],16,530742520),d=hh(d,e,f,c,b[2],23,-995338651),c=ii(c,d,e,f,b[0],6,-198630844),f=ii(f,c,d,e,b[7],10,1126891415),e=ii(e,f,c,d,b[14],15,-1416354905),d=ii(d,e,f,c,b[5],21,-57434055),c=ii(c,d,e,f,b[12],6,1700485571),f=ii(f,c,d,e,b[3],10,-1894986606),e=ii(e,f,c,d,b[10],15,-1051523),d=ii(d,e,f,c,b[1],21,-2054922799),c=ii(c,d,e,f,b[8],6,1873313359),f=ii(f,c,d,e,b[15],10,-30611744),e=ii(e,f,c,d,b[6],15,-1560198380),d=ii(d,e,f,c,b[13],21,1309151649),c=ii(c,d,e,f,b[4],6,-145523070),f=ii(f,c,d,e,b[11],10,-1120210379),e=ii(e,f,c,d,b[2],15,718787259),d=ii(d,e,f,c,b[9],21,-343485551),a[0]=add32(c,a[0]),a[1]=add32(d,a[1]),a[2]=add32(e,a[2]),a[3]=add32(f,a[3])}function cmn(a,b,c,d,e,f){return b=add32(add32(b,a),add32(d,f)),add32(b<<e|b>>>32-e,c)}function ff(a,b,c,d,e,f,g){return cmn(b&c|~b&d,a,b,e,f,g)}function gg(a,b,c,d,e,f,g){return cmn(b&d|c&~d,a,b,e,f,g)}function hh(a,b,c,d,e,f,g){return cmn(b^c^d,a,b,e,f,g)}function ii(a,b,c,d,e,f,g){return cmn(c^(b|~d),a,b,e,f,g)}function md51(a){txt="";var b,c=a.length,d=[1732584193,-271733879,-1732584194,271733878];for(b=64;b<=a.length;b+=64)md5cycle(d,md5blk(a.substring(b-64,b)));a=a.substring(b-64);var e=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];for(b=0;b<a.length;b++)e[b>>2]|=a.charCodeAt(b)<<(b%4<<3);if(e[b>>2]|=128<<(b%4<<3),b>55)for(md5cycle(d,e),b=0;16>b;b++)e[b]=0;return e[14]=8*c,md5cycle(d,e),d}function md5blk(a){var b,c=[];for(b=0;64>b;b+=4)c[b>>2]=a.charCodeAt(b)+(a.charCodeAt(b+1)<<8)+(a.charCodeAt(b+2)<<16)+(a.charCodeAt(b+3)<<24);return c}function rhex(a){for(var b="",c=0;4>c;c++)b+=hex_chr[a>>8*c+4&15]+hex_chr[a>>8*c&15];return b}function hex(a){for(var b=0;b<a.length;b++)a[b]=rhex(a[b]);return a.join("")}function md5(a){return hex(md51(a))}function add32(a,b){return a+b&4294967295}function add32(a,b){var c=(65535&a)+(65535&b),d=(a>>16)+(b>>16)+(c>>16);return d<<16|65535&c}var GitHubActivity=function(){"use strict";var a={},b={renderLink:function(a,b,c){return b||(b=a),"undefined"==typeof c&&(c=""),Mustache.render('<a class="'+c+'" href="{{url}}" target="_blank">{{{title}}}</a>',{url:a,title:b})},renderGitHubLink:function(a,c,d){return c||(c=a),"undefined"==typeof d&&(d=""),b.renderLink("https://github.com/"+a,c,d)},getMessageFor:function(a){var c=a.payload;if(a.repoLink=b.renderGitHubLink(a.repo.name),a.userGravatar=Mustache.render('<div class="gha-gravatar-user"><img src="{{url}}" class="gha-gravatar-small"></div>',{url:a.actor.avatar_url}),c.ref&&(a.branch="refs/heads/"===c.ref.substring(0,11)?c.ref.substring(11):c.ref,a.branchLink=b.renderGitHubLink(a.repo.name+"/tree/"+a.branch,a.branch)+" at "),c.commits){var d=c.before+"..."+c.head,e=c.commits.length;2===e?a.commitsMessage=Mustache.render('<a href="https://github.com/{{repo}}/compare/{{shaDiff}}">View comparison for these 2 commits &raquo;</a>',{repo:a.repo.name,shaDiff:d}):e>2&&(a.commitsMessage=Mustache.render('<a href="https://github.com/{{repo}}/compare/{{shaDiff}}">{{length}} more '+pluralize("commit",e-2)+" &raquo;</a>",{repo:a.repo.name,shaDiff:d,length:c.size-2})),c.commits.forEach(function(d,e){return d.message.length>66&&(d.message=d.message.substring(0,66)+"..."),2>e?(d.shaLink=b.renderGitHubLink(a.repo.name+"/commit/"+d.sha,d.sha.substring(0,6),"gha-sha"),void(d.committerGravatar=Mustache.render('<img class="gha-gravatar-commit" src="https://gravatar.com/avatar/{{hash}}?s=30&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="16" />',{hash:md5(d.author.email)}))):(c.commits.splice(2,c.size),!1)})}if(c.issue){var f=a.repo.name+"#"+c.issue.number;a.issueLink=b.renderLink(c.issue.html_url,f),a.issueType="issue",c.issue.pull_request&&(a.issueType="pull request")}if(c.pull_request){var g=c.pull_request;if(a.pullRequestLink=b.renderLink(c.html_url,a.repo.name+"#"+g.number),a.mergeMessage="",c.pull_request.merged){c.action="merged";var h="{{c}} "+pluralize("commit",g.commits)+" with {{a}} "+pluralize("addition",g.additions)+" and {{d}} "+pluralize("deletion",g.deletions);a.mergeMessage=Mustache.render('<br><small class="gha-message-merge">'+h+"</small>",{c:g.commits,a:g.additions,d:g.deletions})}}if(c.comment&&c.comment.pull_request_url){var f=a.repo.name+"#"+c.comment.pull_request_url.split("/").pop();a.pullRequestLink=b.renderGitHubLink(c.comment.pull_request_url,f)}if(c.comment&&c.comment.body&&(a.comment=c.comment.body,a.comment.length>150&&(a.comment=a.comment.substring(0,150)+"..."),c.comment.html_url&&c.comment.commit_id)){var f=a.repo.name+"@"+c.comment.commit_id.substring(0,10);a.commentLink=b.renderLink(c.comment.html_url,f)}if("ReleaseEvent"===a.type&&(a.tagLink=b.renderLink(c.release.html_url,c.release.tag_name),a.zipLink=b.renderLink(c.release.zipball_url,"Download Source Code (zip)")),"GollumEvent"===a.type){var i=c.pages[0];a.actionType=i.action,a.message=a.actionType.charAt(0).toUpperCase()+a.actionType.slice(1)+" ",a.message+=b.renderGitHubLink(i.html_url,i.title)}"FollowEvent"===a.type&&(a.targetLink=b.renderGitHubLink(c.target.login)),"ForkEvent"===a.type&&(a.forkLink=b.renderGitHubLink(c.forkee.full_name)),"MemberEvent"===a.type&&(a.memberLink=b.renderGitHubLink(c.member.login)),c.gist&&(a.actionType="fork"===c.action?c.action+"ed":c.action+"d",a.gistLink=b.renderLink(c.gist.html_url,"gist: "+c.gist.id));var j,h=Mustache.render(templates[a.type],a),k=millisecondsToStr(new Date-new Date(a.created_at));j="CreateEvent"==a.type&&["repository","branch","tag"].indexOf(c.ref_type)>=0?icons[a.type+"_"+c.ref_type]:icons[a.type];var l={message:h,icon:j,timeString:k,userLink:b.renderGitHubLink(a.actor.login)};return singleLineActivities.indexOf(a.type)>-1?Mustache.render(templates.SingleLineActivity,l):Mustache.render(templates.Activity,l)},getHeaderHTML:function(a){return a.name?a.userNameLink=b.renderLink(a.html_url,a.name):a.withoutName=" without-name",a.userLink=b.renderLink(a.html_url,a.login),a.gravatarLink=b.renderLink(a.html_url,'<img src="'+a.avatar_url+'">'),Mustache.render(templates.UserHeader,a)},getActivityHTML:function(a,c){var d="",e=a.length;if(c&&c>e&&(c=e),c=c?c:e,0===c)return Mustache.render(templates.NoActivity,{});for(var f=0;c>f;f++)d+=b.getMessageFor(a[f]);return d},getOutputFromRequest:function(a,b){var c,d,e=new XMLHttpRequest;return e.open("GET",a,!1),e.onload=function(){return e.status>=200&&e.status<400?(d=JSON.parse(e.responseText),void(c=b(d))):!1},e.onerror=function(){console.log("An error occurred connecting to the url.")},e.send(),c},renderStream:function(a,b){b.innerHTML=Mustache.render(templates.Stream,{text:a,footer:templates.Footer}),b.style.position="relative"}};return a.feed=function(a){if(!a.username||!a.selector)return!1;var c,d,e=a.selector,f='https://api.github.com/users/'+a.username+'?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a',g='https://api.github.com/users/'+a.username+"/events?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a";if(a.repository&&(g="https://api.github.com/repos/"+a.username+"/"+a.repository+"/events?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a"),a.clientId&&a.clientSecret){var h="?client_id="+a.clientId+"&client_secret="+a.clientSecret;f+=h,g+=h}if("object"==typeof a.templates)for(var i in templates)"string"==typeof a.templates[i]&&(templates[i]=a.templates[i]);if(c=b.getOutputFromRequest(f,b.getHeaderHTML)){var j;j="undefined"!=a.limit?parseInt(a.limit,10):null,c+=b.getOutputFromRequest(g,function(a){return b.getActivityHTML(a,j)})}else c=Mustache.render(templates.NotFound,{username:a.username});if(d="#"===e.charAt(0)?document.getElementById(e.substring(1)):document.getElementsByClassName(e.substring(1)),d instanceof HTMLCollection)for(var k=0;k<d.length;k++)b.renderStream(c,d[k]);else b.renderStream(c,d)},a}(),hex_chr="0123456789abcdef".split("");"5d41402abc4b2a76b9719d911017c592"!=md5("hello");var templates={Stream:'<div class="gha-feed">{{{text}}}<div class="gha-push-small"></div>{{{footer}}}</div>',Activity:'<div id="{{id}}" class="gha-activity">               <div class="gha-activity-icon"><span class="octicon octicon-{{icon}}"></span></div>               <div class="gha-message"><div class="gha-time">{{{timeString}}}</div>{{{userLink}}} {{{message}}}</div>               <div class="gha-clear"></div>             </div>',SingleLineActivity:'<div class="gha-activity gha-small">                         <div class="gha-activity-icon"><span class="octicon octicon-{{icon}}"></span></div>                         <div class="gha-message">{{{userLink}}} {{{message}}}</div><div class="gha-time">{{{timeString}}}</div>                         <div class="gha-clear"></div>                       </div>',UserHeader:'<div class="gha-header">                 <div class="gha-github-icon"><span class="octicon octicon-mark-github"></span></div>                 <div class="gha-user-info{{withoutName}}">{{{userNameLink}}}<p>{{{userLink}}}</p></div>                 <div class="gha-gravatar">{{{gravatarLink}}}</div>               </div><div class="gha-push"></div>',Footer:'<div class="gha-footer">Public Activity <a href="https://github.com/caseyscarborough/github-activity" target="_blank">GitHub Activity Stream</a>',NoActivity:'<div class="gha-info">This user does not have any public activity yet.</div>',NotFound:'<div class="gha-info">User {{username}} wasn\'t found.</div>',CommitCommentEvent:"commented on commit {{{commentLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",CreateEvent:"created {{payload.ref_type}} {{{branchLink}}}{{{repoLink}}}",DeleteEvent:"deleted {{payload.ref_type}} {{payload.ref}} at {{{repoLink}}}",FollowEvent:"started following {{{targetLink}}}",ForkEvent:"forked {{{repoLink}}} to {{{forkLink}}}",GistEvent:"{{actionType}} {{{gistLink}}}",GollumEvent:"{{actionType}} the {{{repoLink}}} wiki<br>{{{userGravatar}}}<small>{{{message}}}</small>",IssueCommentEvent:"commented on {{issueType}} {{{issueLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",IssuesEvent:"{{payload.action}} issue {{{issueLink}}}<br>{{{userGravatar}}}<small>{{payload.issue.title}}</small>",MemberEvent:"added {{{memberLink}}} to {{{repoLink}}}",PublicEvent:"open sourced {{{repoLink}}}",PullRequestEvent:"{{payload.action}} pull request {{{pullRequestLink}}}<br>{{{userGravatar}}}<small>{{payload.pull_request.title}}</small>{{{mergeMessage}}}",PullRequestReviewCommentEvent:"commented on pull request {{{pullRequestLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",PushEvent:'pushed to {{{branchLink}}}{{{repoLink}}}<br>                <ul class="gha-commits">{{#payload.commits}}<li><small>{{{committerGravatar}}} {{{shaLink}}} {{message}}</small></li>{{/payload.commits}}</ul>                <small class="gha-message-commits">{{{commitsMessage}}}</small>',ReleaseEvent:'released {{{tagLink}}} at {{{repoLink}}}<br>{{{userGravatar}}}<small><span class="octicon octicon-cloud-download"></span>  {{{zipLink}}}</small>',WatchEvent:"starred {{{repoLink}}}"},icons={CommitCommentEvent:"comment-discussion",CreateEvent_repository:"repo-create",CreateEvent_tag:"tag-add",CreateEvent_branch:"git-branch-create",DeleteEvent:"repo-delete",FollowEvent:"person-follow",ForkEvent:"repo-forked",GistEvent:"gist",GollumEvent:"repo",IssuesEvent:"issue-opened",IssueCommentEvent:"comment-discussion",MemberEvent:"person",PublicEvent:"globe",PullRequestEvent:"git-pull-request",PullRequestReviewCommentEvent:"comment-discussion",PushEvent:"git-commit",ReleaseEvent:"tag-add",WatchEvent:"star"},singleLineActivities=["CreateEvent","DeleteEvent","FollowEvent","ForkEvent","GistEvent","MemberEvent","WatchEvent"];;
+function millisecondsToStr(a){"use strict";function b(a){return a>1?"s ago":" ago"}var c=Math.floor(a/1e3),d=Math.floor(c/31536e3);if(d)return d+" year"+b(d);var e=Math.floor((c%=31536e3)/2592e3);if(e)return e+" month"+b(e);var f=Math.floor((c%=2592e3)/86400);if(f)return f+" day"+b(f);var g=Math.floor((c%=86400)/3600);if(g)return"about "+g+" hour"+b(g);var h=Math.floor((c%=3600)/60);if(h)return h+" minute"+b(h);var i=c%60;return i?i+" second"+b(i):"just now"}function pluralize(a,b){return 1!==b?a+"s":a}function md5cycle(a,b){var c=a[0],d=a[1],e=a[2],f=a[3];c=ff(c,d,e,f,b[0],7,-680876936),f=ff(f,c,d,e,b[1],12,-389564586),e=ff(e,f,c,d,b[2],17,606105819),d=ff(d,e,f,c,b[3],22,-1044525330),c=ff(c,d,e,f,b[4],7,-176418897),f=ff(f,c,d,e,b[5],12,1200080426),e=ff(e,f,c,d,b[6],17,-1473231341),d=ff(d,e,f,c,b[7],22,-45705983),c=ff(c,d,e,f,b[8],7,1770035416),f=ff(f,c,d,e,b[9],12,-1958414417),e=ff(e,f,c,d,b[10],17,-42063),d=ff(d,e,f,c,b[11],22,-1990404162),c=ff(c,d,e,f,b[12],7,1804603682),f=ff(f,c,d,e,b[13],12,-40341101),e=ff(e,f,c,d,b[14],17,-1502002290),d=ff(d,e,f,c,b[15],22,1236535329),c=gg(c,d,e,f,b[1],5,-165796510),f=gg(f,c,d,e,b[6],9,-1069501632),e=gg(e,f,c,d,b[11],14,643717713),d=gg(d,e,f,c,b[0],20,-373897302),c=gg(c,d,e,f,b[5],5,-701558691),f=gg(f,c,d,e,b[10],9,38016083),e=gg(e,f,c,d,b[15],14,-660478335),d=gg(d,e,f,c,b[4],20,-405537848),c=gg(c,d,e,f,b[9],5,568446438),f=gg(f,c,d,e,b[14],9,-1019803690),e=gg(e,f,c,d,b[3],14,-187363961),d=gg(d,e,f,c,b[8],20,1163531501),c=gg(c,d,e,f,b[13],5,-1444681467),f=gg(f,c,d,e,b[2],9,-51403784),e=gg(e,f,c,d,b[7],14,1735328473),d=gg(d,e,f,c,b[12],20,-1926607734),c=hh(c,d,e,f,b[5],4,-378558),f=hh(f,c,d,e,b[8],11,-2022574463),e=hh(e,f,c,d,b[11],16,1839030562),d=hh(d,e,f,c,b[14],23,-35309556),c=hh(c,d,e,f,b[1],4,-1530992060),f=hh(f,c,d,e,b[4],11,1272893353),e=hh(e,f,c,d,b[7],16,-155497632),d=hh(d,e,f,c,b[10],23,-1094730640),c=hh(c,d,e,f,b[13],4,681279174),f=hh(f,c,d,e,b[0],11,-358537222),e=hh(e,f,c,d,b[3],16,-722521979),d=hh(d,e,f,c,b[6],23,76029189),c=hh(c,d,e,f,b[9],4,-640364487),f=hh(f,c,d,e,b[12],11,-421815835),e=hh(e,f,c,d,b[15],16,530742520),d=hh(d,e,f,c,b[2],23,-995338651),c=ii(c,d,e,f,b[0],6,-198630844),f=ii(f,c,d,e,b[7],10,1126891415),e=ii(e,f,c,d,b[14],15,-1416354905),d=ii(d,e,f,c,b[5],21,-57434055),c=ii(c,d,e,f,b[12],6,1700485571),f=ii(f,c,d,e,b[3],10,-1894986606),e=ii(e,f,c,d,b[10],15,-1051523),d=ii(d,e,f,c,b[1],21,-2054922799),c=ii(c,d,e,f,b[8],6,1873313359),f=ii(f,c,d,e,b[15],10,-30611744),e=ii(e,f,c,d,b[6],15,-1560198380),d=ii(d,e,f,c,b[13],21,1309151649),c=ii(c,d,e,f,b[4],6,-145523070),f=ii(f,c,d,e,b[11],10,-1120210379),e=ii(e,f,c,d,b[2],15,718787259),d=ii(d,e,f,c,b[9],21,-343485551),a[0]=add32(c,a[0]),a[1]=add32(d,a[1]),a[2]=add32(e,a[2]),a[3]=add32(f,a[3])}function cmn(a,b,c,d,e,f){return b=add32(add32(b,a),add32(d,f)),add32(b<<e|b>>>32-e,c)}function ff(a,b,c,d,e,f,g){return cmn(b&c|~b&d,a,b,e,f,g)}function gg(a,b,c,d,e,f,g){return cmn(b&d|c&~d,a,b,e,f,g)}function hh(a,b,c,d,e,f,g){return cmn(b^c^d,a,b,e,f,g)}function ii(a,b,c,d,e,f,g){return cmn(c^(b|~d),a,b,e,f,g)}function md51(a){txt="";var b,c=a.length,d=[1732584193,-271733879,-1732584194,271733878];for(b=64;b<=a.length;b+=64)md5cycle(d,md5blk(a.substring(b-64,b)));a=a.substring(b-64);var e=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];for(b=0;b<a.length;b++)e[b>>2]|=a.charCodeAt(b)<<(b%4<<3);if(e[b>>2]|=128<<(b%4<<3),b>55)for(md5cycle(d,e),b=0;16>b;b++)e[b]=0;return e[14]=8*c,md5cycle(d,e),d}function md5blk(a){var b,c=[];for(b=0;64>b;b+=4)c[b>>2]=a.charCodeAt(b)+(a.charCodeAt(b+1)<<8)+(a.charCodeAt(b+2)<<16)+(a.charCodeAt(b+3)<<24);return c}function rhex(a){for(var b="",c=0;4>c;c++)b+=hex_chr[a>>8*c+4&15]+hex_chr[a>>8*c&15];return b}function hex(a){for(var b=0;b<a.length;b++)a[b]=rhex(a[b]);return a.join("")}function md5(a){return hex(md51(a))}function add32(a,b){return a+b&4294967295}function add32(a,b){var c=(65535&a)+(65535&b),d=(a>>16)+(b>>16)+(c>>16);return d<<16|65535&c}var GitHubActivity=function(){"use strict";var a={},b={renderLink:function(a,b,c){return b||(b=a),"undefined"==typeof c&&(c=""),Mustache.render('<a class="'+c+'" href="{{url}}" target="_blank">{{{title}}}</a>',{url:a,title:b})},renderGitHubLink:function(a,c,d){return c||(c=a),"undefined"==typeof d&&(d=""),b.renderLink("https://github.com/"+a,c,d)},getMessageFor:function(a){var c=a.payload;if(a.repoLink=b.renderGitHubLink(a.repo.name),a.userGravatar=Mustache.render('<div class="gha-gravatar-user"><img src="{{url}}" class="gha-gravatar-small"></div>',{url:a.actor.avatar_url}),c.ref&&(a.branch="refs/heads/"===c.ref.substring(0,11)?c.ref.substring(11):c.ref,a.branchLink=b.renderGitHubLink(a.repo.name+"/tree/"+a.branch,a.branch)+" at "),c.commits){var d=c.before+"..."+c.head,e=c.commits.length;2===e?a.commitsMessage=Mustache.render('<a href="https://github.com/{{repo}}/compare/{{shaDiff}}">View comparison for these 2 commits &raquo;</a>',{repo:a.repo.name,shaDiff:d}):e>2&&(a.commitsMessage=Mustache.render('<a href="https://github.com/{{repo}}/compare/{{shaDiff}}">{{length}} more '+pluralize("commit",e-2)+" &raquo;</a>",{repo:a.repo.name,shaDiff:d,length:c.size-2})),c.commits.forEach(function(d,e){return d.message.length>66&&(d.message=d.message.substring(0,66)+"..."),2>e?(d.shaLink=b.renderGitHubLink(a.repo.name+"/commit/"+d.sha,d.sha.substring(0,6),"gha-sha"),void(d.committerGravatar=Mustache.render('<img class="gha-gravatar-commit" src="https://gravatar.com/avatar/{{hash}}?s=30&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="16" />',{hash:md5(d.author.email)}))):(c.commits.splice(2,c.size),!1)})}if(c.issue){var f=a.repo.name+"#"+c.issue.number;a.issueLink=b.renderLink(c.issue.html_url,f),a.issueType="issue",c.issue.pull_request&&(a.issueType="pull request")}if(c.pull_request){var g=c.pull_request;if(a.pullRequestLink=b.renderLink(c.html_url,a.repo.name+"#"+g.number),a.mergeMessage="",c.pull_request.merged){c.action="merged";var h="{{c}} "+pluralize("commit",g.commits)+" with {{a}} "+pluralize("addition",g.additions)+" and {{d}} "+pluralize("deletion",g.deletions);a.mergeMessage=Mustache.render('<br><small class="gha-message-merge">'+h+"</small>",{c:g.commits,a:g.additions,d:g.deletions})}}if(c.comment&&c.comment.pull_request_url){var f=a.repo.name+"#"+c.comment.pull_request_url.split("/").pop();a.pullRequestLink=b.renderGitHubLink(c.comment.pull_request_url,f)}if(c.comment&&c.comment.body&&(a.comment=c.comment.body,a.comment.length>150&&(a.comment=a.comment.substring(0,150)+"..."),c.comment.html_url&&c.comment.commit_id)){var f=a.repo.name+"@"+c.comment.commit_id.substring(0,10);a.commentLink=b.renderLink(c.comment.html_url,f)}if("ReleaseEvent"===a.type&&(a.tagLink=b.renderLink(c.release.html_url,c.release.tag_name),a.zipLink=b.renderLink(c.release.zipball_url,"Download Source Code (zip)")),"GollumEvent"===a.type){var i=c.pages[0];a.actionType=i.action,a.message=a.actionType.charAt(0).toUpperCase()+a.actionType.slice(1)+" ",a.message+=b.renderGitHubLink(i.html_url,i.title)}"FollowEvent"===a.type&&(a.targetLink=b.renderGitHubLink(c.target.login)),"ForkEvent"===a.type&&(a.forkLink=b.renderGitHubLink(c.forkee.full_name)),"MemberEvent"===a.type&&(a.memberLink=b.renderGitHubLink(c.member.login)),c.gist&&(a.actionType="fork"===c.action?c.action+"ed":c.action+"d",a.gistLink=b.renderLink(c.gist.html_url,"gist: "+c.gist.id));var j,h=Mustache.render(templates[a.type],a),k=millisecondsToStr(new Date-new Date(a.created_at));j="CreateEvent"==a.type&&["repository","branch","tag"].indexOf(c.ref_type)>=0?icons[a.type+"_"+c.ref_type]:icons[a.type];var l={message:h,icon:j,timeString:k,userLink:b.renderGitHubLink(a.actor.login)};return singleLineActivities.indexOf(a.type)>-1?Mustache.render(templates.SingleLineActivity,l):Mustache.render(templates.Activity,l)},getHeaderHTML:function(a){return a.name?a.userNameLink=b.renderLink(a.html_url,a.name):a.withoutName=" without-name",a.userLink=b.renderLink(a.html_url,a.login),a.gravatarLink=b.renderLink(a.html_url,'<img src="'+a.avatar_url+'">'),Mustache.render(templates.UserHeader,a)},getActivityHTML:function(a,c){var d="",e=a.length;if(c&&c>e&&(c=e),c=c?c:e,0===c)return Mustache.render(templates.NoActivity,{});for(var f=0;c>f;f++)d+=b.getMessageFor(a[f]);return d},getOutputFromRequest:function(a,b){var c,d,e=new XMLHttpRequest;return e.open("GET",a,!1),e.onload=function(){return e.status>=200&&e.status<400?(d=JSON.parse(e.responseText),void(c=b(d))):!1},e.onerror=function(){console.log("An error occurred connecting to the url.")},e.send(),c},renderStream:function(a,b){b.innerHTML=Mustache.render(templates.Stream,{text:a,footer:templates.Footer}),b.style.position="relative"}};return a.feed=function(a){if(!a.username||!a.selector)return!1;var c,d,e=a.selector,f='https://api.github.com/users/'+a.username+'?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a',g='https://api.github.com/users/'+a.username+"/events?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a";if(a.repository&&(g="https://api.github.com/repos/"+a.username+"/"+a.repository+"/events?access_token=873e18b1ecb0e51002b454675b22f6c10b4ab38a"),a.clientId&&a.clientSecret){var h="?client_id="+a.clientId+"&client_secret="+a.clientSecret;f+=h,g+=h}if("object"==typeof a.templates)for(var i in templates)"string"==typeof a.templates[i]&&(templates[i]=a.templates[i]);if(c=b.getOutputFromRequest(f,b.getHeaderHTML)){var j;j="undefined"!=a.limit?parseInt(a.limit,10):null,c+=b.getOutputFromRequest(g,function(a){return b.getActivityHTML(a,j)})}else c=Mustache.render(templates.NotFound,{username:a.username});if(d="#"===e.charAt(0)?document.getElementById(e.substring(1)):document.getElementsByClassName(e.substring(1)),d instanceof HTMLCollection)for(var k=0;k<d.length;k++)b.renderStream(c,d[k]);else b.renderStream(c,d)},a}(),hex_chr="0123456789abcdef".split("");"5d41402abc4b2a76b9719d911017c592"!=md5("hello");var templates={Stream:'<div class="gha-feed">{{{text}}}<div class="gha-push-small"></div>{{{footer}}}</div>',Activity:'<div id="{{id}}" class="gha-activity">               <div class="gha-activity-icon"><span class="octicon octicon-{{icon}}"></span></div>               <div class="gha-message"><div class="gha-time">{{{timeString}}}</div>{{{userLink}}} {{{message}}}</div>               <div class="gha-clear"></div>             </div>',SingleLineActivity:'<div class="gha-activity gha-small">                         <div class="gha-activity-icon"><span class="octicon octicon-{{icon}}"></span></div>                         <div class="gha-message">{{{userLink}}} {{{message}}}</div><div class="gha-time">{{{timeString}}}</div>                         <div class="gha-clear"></div>                       </div>',UserHeader:'<div class="gha-header">                 <div class="gha-github-icon"><span class="octicon octicon-mark-github"></span></div>                 <div class="gha-user-info{{withoutName}}">{{{userNameLink}}}<p>{{{userLink}}}</p></div>                 <div class="gha-gravatar">{{{gravatarLink}}}</div>               </div><div class="gha-push"></div>',Footer:'<div class="gha-footer">Public Activity <a href="https://github.com/caseyscarborough/github-activity" target="_blank">GitHub Activity Stream</a>',NoActivity:'<div class="gha-info">This user does not have any public activity yet.</div>',NotFound:'<div class="gha-info">User {{username}} wasn\'t found.</div>',CommitCommentEvent:"commented on commit {{{commentLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",CreateEvent:"created {{payload.ref_type}} {{{branchLink}}}{{{repoLink}}}",DeleteEvent:"deleted {{payload.ref_type}} {{payload.ref}} at {{{repoLink}}}",FollowEvent:"started following {{{targetLink}}}",ForkEvent:"forked {{{repoLink}}} to {{{forkLink}}}",GistEvent:"{{actionType}} {{{gistLink}}}",GollumEvent:"{{actionType}} the {{{repoLink}}} wiki<br>{{{userGravatar}}}<small>{{{message}}}</small>",IssueCommentEvent:"commented on {{issueType}} {{{issueLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",IssuesEvent:"{{payload.action}} issue {{{issueLink}}}<br>{{{userGravatar}}}<small>{{payload.issue.title}}</small>",MemberEvent:"added {{{memberLink}}} to {{{repoLink}}}",PublicEvent:"open sourced {{{repoLink}}}",PullRequestEvent:"{{payload.action}} pull request {{{pullRequestLink}}}<br>{{{userGravatar}}}<small>{{payload.pull_request.title}}</small>{{{mergeMessage}}}",PullRequestReviewCommentEvent:"commented on pull request {{{pullRequestLink}}}<br>{{{userGravatar}}}<small>{{comment}}</small>",PushEvent:'pushed to {{{branchLink}}}{{{repoLink}}}<br>                <ul class="gha-commits">{{#payload.commits}}<li><small>{{{committerGravatar}}} {{{shaLink}}} {{message}}</small></li>{{/payload.commits}}</ul>                <small class="gha-message-commits">{{{commitsMessage}}}</small>',ReleaseEvent:'released {{{tagLink}}} at {{{repoLink}}}<br>{{{userGravatar}}}<small><span class="octicon octicon-cloud-download"></span>  {{{zipLink}}}</small>',WatchEvent:"starred {{{repoLink}}}"},icons={CommitCommentEvent:"comment-discussion",CreateEvent_repository:"repo-create",CreateEvent_tag:"tag-add",CreateEvent_branch:"git-branch-create",DeleteEvent:"repo-delete",FollowEvent:"person-follow",ForkEvent:"repo-forked",GistEvent:"gist",GollumEvent:"repo",IssuesEvent:"issue-opened",IssueCommentEvent:"comment-discussion",MemberEvent:"person",PublicEvent:"globe",PullRequestEvent:"git-pull-request",PullRequestReviewCommentEvent:"comment-discussion",PushEvent:"git-commit",ReleaseEvent:"tag-add",WatchEvent:"star"},singleLineActivities=["CreateEvent","DeleteEvent","FollowEvent","ForkEvent","GistEvent","MemberEvent","WatchEvent"];;;app
+	.factory("GitHubRepos", function($resource) {
+  		return $resource("https://api.github.com/users/dintorf/repos", {}, {
+		    query: { method: "GET", isArray: true }
+		});
+	});

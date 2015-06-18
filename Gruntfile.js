@@ -82,6 +82,7 @@ module.exports = function (grunt) {
 					"public/lib/bootstrap/dist/js/bootstrap.js",
 					"public/lib/angular/angular.js",
 					"public/lib/angular-route/angular-route.js",
+					"public/lib/angular-resource/angular-resource.js",
 					"public/src/js/*"
 				],
 				dest: "public/src/dist/js/app.js"
