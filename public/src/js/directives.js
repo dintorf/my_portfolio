@@ -79,3 +79,21 @@ app.directive('twitterTimeline', [function() {
 		}
 	};
 }]);
+
+app.directive("githubParticipationGraph", ['$timeout', function($timeout){
+	return {
+	    link: function(scope, element, attrs){
+		  $timeout(
+		  	Gitgraph({ 
+				user    : 'dintorf',
+				repo    : attrs.repo,
+				domNode : element[0],
+				width   : 800,
+				height  : 170,
+				allColor: "rgb(202, 202, 202)",
+				userColor: "#5cb85c",
+				background: "white"
+			}), 0);
+	    }
+	};
+}]);

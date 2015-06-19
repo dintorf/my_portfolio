@@ -83,6 +83,8 @@ module.exports = function (grunt) {
 					"public/lib/angular/angular.js",
 					"public/lib/angular-route/angular-route.js",
 					"public/lib/angular-resource/angular-resource.js",
+					"public/lib/github-activity.js",
+					"public/lib/Gitgraph.js",
 					"public/src/js/*"
 				],
 				dest: "public/src/dist/js/app.js"
