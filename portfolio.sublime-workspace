@@ -119,14 +119,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "public/index.html",
-			"settings":
-			{
-				"buffer_size": 1089,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -193,6 +185,8 @@
 	],
 	"file_history":
 	[
+		"/Users/dintorf/Developer/MyPortfolio/public/index.html",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/js/controllers.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/directives.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/filters.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/projects.html",
@@ -204,7 +198,6 @@
 		"/Users/dintorf/Developer/MyPortfolio/public/views/main.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/partials/skills.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/main.css",
-		"/Users/dintorf/Developer/MyPortfolio/public/src/js/controllers.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/services.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/footer.html",
 		"/Users/dintorf/Developer/MyPortfolio/package.json",
@@ -319,8 +312,7 @@
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Extensions.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Documents.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Health.dll",
-		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.GoogleBase.dll",
-		"/Users/dintorf/wisecode/SECURE/TOOLS/helpcat.asp"
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.GoogleBase.dll"
 	],
 	"find":
 	{
@@ -490,39 +482,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "public/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1089,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								816,
-								816
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
