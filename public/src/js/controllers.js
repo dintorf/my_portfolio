@@ -118,6 +118,12 @@ app
 				set: false
 			},
 			{
+				title: 'PHP',
+				label: 'Intermediate',
+				proficiency: '75%',
+				set: false
+			},
+			{
 				title: 'Swift & Objective-C',
 				label: 'Pro',
 				proficiency: '80%',

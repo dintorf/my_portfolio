@@ -184,16 +184,17 @@
 		"/Users/dintorf/Developer/MyPortfolio",
 		"/Users/dintorf/Developer/MyPortfolio/node_modules",
 		"/Users/dintorf/Developer/MyPortfolio/public",
-		"/Users/dintorf/Developer/MyPortfolio/public/images",
-		"/Users/dintorf/Developer/MyPortfolio/public/lib",
 		"/Users/dintorf/Developer/MyPortfolio/public/src",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/dist",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/dist/js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js",
-		"/Users/dintorf/Developer/MyPortfolio/public/views"
+		"/Users/dintorf/Developer/MyPortfolio/public/views",
+		"/Users/dintorf/Developer/MyPortfolio/public/views/partials"
 	],
 	"file_history":
 	[
+		"/Users/dintorf/Developer/MyPortfolio/public/src/js/directives.js",
+		"/Users/dintorf/Developer/MyPortfolio/public/src/js/filters.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/projects.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/lib/Gitgraph.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/app.js",
@@ -204,7 +205,6 @@
 		"/Users/dintorf/Developer/MyPortfolio/public/views/partials/skills.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/main.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/controllers.js",
-		"/Users/dintorf/Developer/MyPortfolio/public/src/js/directives.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/services.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/views/footer.html",
 		"/Users/dintorf/Developer/MyPortfolio/package.json",
@@ -215,7 +215,6 @@
 		"/Users/dintorf/Developer/MyPortfolio/public/src/dist/css/app.min.css",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/main.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/github-activity.js",
-		"/Users/dintorf/Developer/MyPortfolio/public/src/js/filters.js",
 		"/Users/dintorf/Developer/MyPortfolio/.jshintrc",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/dist/app.min.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/css/github-activity.css",
@@ -507,8 +506,8 @@
 						"selection":
 						[
 							[
-								1069,
-								1069
+								816,
+								816
 							]
 						],
 						"settings":
