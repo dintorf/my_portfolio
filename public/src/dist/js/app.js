@@ -41491,7 +41491,7 @@ app.config(function ($routeProvider, $locationProvider) {
 			controller: 'ProjectsController',
 			templateUrl: 'views/projects.html'
 		})
-		.otherwise('/');
+		.otherwise({redirectTo: '/'});
 	$locationProvider.html5Mode(true);
 });;app
 	.controller('NavController', ['$scope', function ($scope, $location) {

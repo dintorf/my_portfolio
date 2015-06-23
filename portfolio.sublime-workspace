@@ -119,6 +119,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "public/src/js/controllers.js",
+			"settings":
+			{
+				"buffer_size": 3709,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -185,6 +193,7 @@
 	],
 	"file_history":
 	[
+		"/Users/dintorf/Developer/TutsWebAppAngular/contacts/public/src/controllers.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/index.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/controllers.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/directives.js",
@@ -311,8 +320,7 @@
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.ContentForShopping.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Extensions.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Documents.dll",
-		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Health.dll",
-		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.GoogleBase.dll"
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Health.dll"
 	],
 	"find":
 	{
@@ -482,8 +490,38 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "public/src/js/controllers.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3709,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1297.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -539,6 +577,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"controllers",
+				"public/src/js/controllers.js"
+			],
+			[
+				"controllers.js",
+				"contacts/public/src/controllers.js"
+			],
 			[
 				"webcontactall",
 				"SECURE/webcontactAllFields.asp"
@@ -1042,14 +1088,6 @@
 			[
 				"client/default.asp",
 				"wisecode/SECURE/client/client/Default.aspx.cs"
-			],
-			[
-				"client/default.aspx.cs",
-				"wisecode/SECURE/client/client/Default.aspx.cs"
-			],
-			[
-				"client/client.asp",
-				"wisecode/SECURE/includes/client/Client.asp"
 			]
 		],
 		"width": 0.0
