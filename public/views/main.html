@@ -5,10 +5,5 @@
 </div>
 
 <div class="container-fluid">
-  	<div id="github" class="row section style3">
-	  <div class="container">
-	  	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"><div id="feed"></div></div>
-  		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"><div twitter-timeline="608840345837641728" auto-resize="true" css-url="../src/css/main.css">Loading tweets...</div></div>
-	  </div>
-	</div>
+  	<div ng-include="'views/partials/github-twitter.html'" onload="loadGithub()"></div>
 </div>

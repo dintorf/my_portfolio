@@ -126,6 +126,22 @@
 				"buffer_size": 3709,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "public/src/js/app.js",
+			"settings":
+			{
+				"buffer_size": 405,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/.htaccess",
+			"settings":
+			{
+				"buffer_size": 157,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "",
@@ -193,6 +209,7 @@
 	],
 	"file_history":
 	[
+		"/Users/dintorf/Developer/MyPortfolio/public/.htaccess",
 		"/Users/dintorf/Developer/TutsWebAppAngular/contacts/public/src/controllers.js",
 		"/Users/dintorf/Developer/MyPortfolio/public/index.html",
 		"/Users/dintorf/Developer/MyPortfolio/public/src/js/controllers.js",
@@ -319,8 +336,7 @@
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Contacts.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.ContentForShopping.dll",
 		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Extensions.dll",
-		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Documents.dll",
-		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Health.dll"
+		"/Users/dintorf/wisecode/SECURE/Planner/bin/Google.GData.Documents.dll"
 	],
 	"find":
 	{
@@ -490,7 +506,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -517,6 +533,63 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 1297.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/src/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 405,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								365,
+								365
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/.htaccess",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 157,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								157,
+								157
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

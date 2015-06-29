@@ -16,7 +16,7 @@ app
 		];
 	}])
 	.controller('MainController', ['$scope','$sce', function ($scope, $sce, $location) {
-		$scope.myPic = '../images/dist/me.jpg';
+		$scope.myPic = '../images/dist/headshot.jpg';
 		$scope.bgImage = '../images/dist/creek2.jpg';
 		$scope.socialSites = [
 			{
@@ -43,10 +43,12 @@ app
 
 		$scope.scroll = 0;
 
-		GitHubActivity.feed({
-		    username: "dintorf",
-		    selector: "#feed"
-		});
+		$scope.loadGithub = function() {
+			GitHubActivity.feed({
+			    username: "dintorf",
+			    selector: "#feed"
+			});
+		};
 	}])
 	.controller('InfoController', ['$scope', function ($scope, $location) {
 		$scope.details = [
